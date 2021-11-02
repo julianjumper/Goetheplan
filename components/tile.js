@@ -7,7 +7,7 @@ const { width, height } = Dimensions.get("window");
 
 const calcTileDimensions = (deviceWidth, deviceHeight, tpr) => {
     const padding = 10
-    const height = (deviceHeight / 15)
+    const height = (deviceHeight / 14)
     const width = (deviceWidth / 1.34)
     return { width, height, padding };
 };
@@ -33,8 +33,11 @@ function getRoomText(room) {
             <Text style={itemStyle.itemText}><B>neuer Raum:</B> {room} </Text>
         );
     } else {
-        room = "---";
-        return <Text style={itemStyle.itemText}><B>neuer Raum:</B> {room} </Text>
+        if (room = "---") {
+            return <Text style={itemStyle.itemText}><B>neuer Raum:</B> {room} </Text>
+        } else {
+            return <Text style={itemStyle.itemText}><B>neuer Raum:</B> {room} </Text>
+        }
     }
 }
 
@@ -51,6 +54,40 @@ function getOnlyOneRoom(room) {
     if (room.search(",") > 0) {
         room = room.split(",");
         return room[0] + ", ...";
+    } else {
+        return room;
+    }
+}
+
+function getSubject(subject) {
+    if (subject == "") {
+        return "geändert"
+    } else {
+        return subject;
+    }
+}
+
+function getColor(kind) {
+    let color = "orange";
+    switch (kind) {
+        case "EVA":
+            return color = "#FF6262";
+        case "Änderung":
+            return color = "#A6A3A3";
+        case "Vertretung":
+            return color = "#4DB2F5";
+        case "Veranst.":
+            return color = "pink";
+        case "Raumänd.":
+            return color = "#4DB2F5";
+        case "Sondereins.":
+            return color = "#FFFF89";
+        case "Entfall":
+            return color = "#FF6262";
+        case "Vertr.":
+            return color = "#8DFF89";
+        default:
+            return color = "orange";
     }
 }
 
@@ -81,8 +118,8 @@ function measureSize(kind) {
     return fontSize
 }
 
-const Item = ({ width, height, padding, text, lessons, kind, kind_text_size, room, comment, _class }) => (
-    <View style={[itemStyle.item, { width: width, height: height, paddingHorizontal: padding }]}>
+const Item = ({ width, height, padding, text, lessons, kind, kind_text_size, room, comment, _class, subject, color }) => (
+    <View style={[itemStyle.item, { width: width, height: height, paddingHorizontal: padding, backgroundColor: color }]}>
         <View style={{ justifyContent: "center" }}>
             <View style={[itemStyle.itemCircle, { width: height - 10, height: height - 10 }]}>
                 <Text style={itemStyle.lessonText}>{lessons}</Text>
@@ -90,6 +127,7 @@ const Item = ({ width, height, padding, text, lessons, kind, kind_text_size, roo
         </View>
         <View style={[itemStyle.itemTeacher, { width: width / 1.9 },]}>
             <Text style={itemStyle.itemText}><B>Klasse:</B> {_class}</Text>
+            <Text style={itemStyle.itemText}><B>Fach:</B> {subject}</Text>
             <Text style={itemStyle.itemText}><B>Lehrer:</B> {text}</Text>
             {room}
         </View>
@@ -111,10 +149,12 @@ const Tile = (props) => {
     _room = getRoomText(_room);
     const kind_text_size = measureSize(_kind);
     let _teacher = getOnlyOneTeacher(props.text);
+    let _subject = getSubject(props.subject);
+    let _color = getColor(_kind);
 
     return (
         <View>
-            {Item({ ...tileDimensions, text: _teacher, lessons: props.lessons, kind: _kind, kind_text_size: kind_text_size, room: _room, comment: _comment, _class: props.class })}
+            {Item({ ...tileDimensions, text: _teacher, lessons: props.lessons, kind: _kind, kind_text_size: kind_text_size, room: _room, comment: _comment, _class: props.class, subject: _subject, color: _color })}
         </View>
     )
 }

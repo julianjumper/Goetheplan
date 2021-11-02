@@ -1,0 +1,710 @@
+{
+    "today": {
+        "date": "2.11.2021",
+        "day": "Dienstag",
+        "news": [
+            "Nachtestung: 1. Stunde Raum 033 oder draußen bei Frau Markarian (MK)"
+        ],
+        "information": [
+            {
+                "lessons": "10",
+                "absent": "Frz",
+                "replacement": "Mun",
+                "subject": "Bienen",
+                "newRoom": "",
+                "type": "Mitbetr.",
+                "comments": "",
+                "classes": ""
+            },
+            {
+                "lessons": "1 - 2",
+                "absent": "De",
+                "replacement": "Bal",
+                "subject": "Sp2",
+                "newRoom": "Th3",
+                "type": "Mitbetr.",
+                "comments": "",
+                "classes": "7a"
+            },
+            {
+                "lessons": "7",
+                "absent": "Kie",
+                "replacement": "Kna",
+                "subject": "ZesA7M",
+                "newRoom": "251",
+                "type": "Vertr.",
+                "comments": "",
+                "classes": "7."
+            },
+            {
+                "lessons": "8",
+                "absent": "Frz",
+                "replacement": "Eis",
+                "subject": "Mub",
+                "newRoom": "101",
+                "type": "Mitbetr.",
+                "comments": "Mub findet statt!",
+                "classes": "7b, 7c, 8a, 8b, 8c, 9b, 9c, 9d, 10b, 10c, 10d, 10e"
+            },
+            {
+                "lessons": "5",
+                "absent": "La",
+                "replacement": "Wie",
+                "subject": "Sp1",
+                "newRoom": "Th3",
+                "type": "Mitbetr.",
+                "comments": "",
+                "classes": "7c"
+            },
+            {
+                "lessons": "6",
+                "absent": "Jae",
+                "replacement": "Ben",
+                "subject": "Mu",
+                "newRoom": "104",
+                "type": "Vertr.",
+                "comments": "Aufgaben liegen vor",
+                "classes": "7d"
+            },
+            {
+                "lessons": "3 - 4",
+                "absent": "Pau",
+                "replacement": "Bd",
+                "subject": "Ch",
+                "newRoom": "121",
+                "type": "Mitbetr.",
+                "comments": "",
+                "classes": "8b"
+            },
+            {
+                "lessons": "2",
+                "absent": "Go",
+                "replacement": "Kik",
+                "subject": "Ch",
+                "newRoom": "153",
+                "type": "Vertr.",
+                "comments": "KuKo findet statt!",
+                "classes": "8c"
+            },
+            {
+                "lessons": "3",
+                "absent": "Jae",
+                "replacement": "MK",
+                "subject": "D",
+                "newRoom": "253",
+                "type": "Vertr.",
+                "comments": "Aufgaben liegen vor",
+                "classes": "9b"
+            },
+            {
+                "lessons": "4",
+                "absent": "Jae",
+                "replacement": "Mey",
+                "subject": "D",
+                "newRoom": "253",
+                "type": "Vertr.",
+                "comments": "Aufgaben liegen vor",
+                "classes": "9b"
+            },
+            {
+                "lessons": "5",
+                "absent": "Frz",
+                "replacement": "Dre",
+                "subject": "Mu",
+                "newRoom": "253",
+                "type": "Vertr.",
+                "comments": "",
+                "classes": "9b"
+            },
+            {
+                "lessons": "3",
+                "absent": "Go",
+                "replacement": "Wsm",
+                "subject": "Ge",
+                "newRoom": "254",
+                "type": "Vertr.",
+                "comments": "",
+                "classes": "9c"
+            },
+            {
+                "lessons": "4",
+                "absent": "Go",
+                "replacement": "Kai",
+                "subject": "Ge",
+                "newRoom": "254",
+                "type": "Vertr.",
+                "comments": "",
+                "classes": "9c"
+            },
+            {
+                "lessons": "5",
+                "absent": "Jae",
+                "replacement": "Op",
+                "subject": "D",
+                "newRoom": "254",
+                "type": "Vertr.",
+                "comments": "Aufgaben liegen vor",
+                "classes": "9c"
+            },
+            {
+                "lessons": "5",
+                "absent": "Pau",
+                "replacement": "Sd",
+                "subject": "Ma",
+                "newRoom": "232",
+                "type": "Vertr.",
+                "comments": "",
+                "classes": "9d"
+            },
+            {
+                "lessons": "2",
+                "absent": "Jae",
+                "replacement": "---",
+                "subject": "Mu",
+                "newRoom": "---",
+                "type": "Entfall",
+                "comments": "",
+                "classes": "10e"
+            },
+            {
+                "lessons": "5",
+                "absent": "De",
+                "replacement": "Bal",
+                "subject": "D",
+                "newRoom": "201",
+                "type": "Vertr.",
+                "comments": "",
+                "classes": "10e"
+            },
+            {
+                "lessons": "1 - 2",
+                "absent": "Pau",
+                "replacement": "+",
+                "subject": "Gma3",
+                "newRoom": "233",
+                "type": "EVA",
+                "comments": "",
+                "classes": "12"
+            },
+            {
+                "lessons": "5",
+                "absent": "Go",
+                "replacement": "+",
+                "subject": "Gch2",
+                "newRoom": "021",
+                "type": "EVA",
+                "comments": "",
+                "classes": "12"
+            },
+            {
+                "lessons": "6",
+                "absent": "La",
+                "replacement": "+",
+                "subject": "Gin1",
+                "newRoom": "K02",
+                "type": "EVA",
+                "comments": "",
+                "classes": "12"
+            },
+            {
+                "lessons": "6",
+                "absent": "Kie",
+                "replacement": "+",
+                "subject": "Gma5",
+                "newRoom": "051",
+                "type": "EVA",
+                "comments": "",
+                "classes": "12"
+            },
+            {
+                "lessons": "6",
+                "absent": "De",
+                "replacement": "+",
+                "subject": "Gde6",
+                "newRoom": "241",
+                "type": "EVA",
+                "comments": "",
+                "classes": "12"
+            },
+            {
+                "lessons": "7",
+                "absent": "Pau",
+                "replacement": "+",
+                "subject": "Gma6",
+                "newRoom": "051",
+                "type": "EVA",
+                "comments": "",
+                "classes": "12"
+            },
+            {
+                "lessons": "7",
+                "absent": "Go",
+                "replacement": "+",
+                "subject": "Gch1",
+                "newRoom": "021",
+                "type": "EVA",
+                "comments": "",
+                "classes": "12"
+            },
+            {
+                "lessons": "5",
+                "absent": "Kie",
+                "replacement": "---",
+                "subject": "ESL",
+                "newRoom": "---",
+                "type": "Entfall",
+                "comments": "",
+                "classes": ""
+            },
+            {
+                "lessons": "8 - 10",
+                "absent": "Kie",
+                "replacement": "---",
+                "subject": "AG",
+                "newRoom": "---",
+                "type": "Entfall",
+                "comments": "",
+                "classes": ""
+            },
+            {
+                "lessons": "9",
+                "absent": "Frz",
+                "replacement": "Mun",
+                "subject": "Bienen",
+                "newRoom": "",
+                "type": "Mitbetr.",
+                "comments": "",
+                "classes": ""
+            }
+        ]
+    },
+    "tomorrow": {
+        "date": "3.11.2021",
+        "day": "Mittwoch",
+        "news": [
+            "Nachtestung: 1. Stunde auf dem Sportplatz bei Frau Paterna (Pat)"
+        ],
+        "information": [
+            {
+                "lessons": "1 - 2",
+                "absent": "Tie",
+                "replacement": "---",
+                "subject": "KaR",
+                "newRoom": "---",
+                "type": "Entfall",
+                "comments": "",
+                "classes": "7."
+            },
+            {
+                "lessons": "3 - 4",
+                "absent": "Ben",
+                "replacement": "Ben",
+                "subject": "Ge",
+                "newRoom": "K42, K41",
+                "type": "Raumänd.",
+                "comments": "",
+                "classes": "7d"
+            },
+            {
+                "lessons": "3",
+                "absent": "Buc",
+                "replacement": "Nol",
+                "subject": "Ma",
+                "newRoom": "154",
+                "type": "Vertr.",
+                "comments": "",
+                "classes": "8a"
+            },
+            {
+                "lessons": "4",
+                "absent": "Buc",
+                "replacement": "Wie",
+                "subject": "Ma",
+                "newRoom": "154",
+                "type": "Vertr.",
+                "comments": "",
+                "classes": "8a"
+            },
+            {
+                "lessons": "5",
+                "absent": "Buc",
+                "replacement": "Gka",
+                "subject": "F2",
+                "newRoom": "251",
+                "type": "S. Vertr.",
+                "comments": "",
+                "classes": "8a"
+            },
+            {
+                "lessons": "6",
+                "absent": "Buc",
+                "replacement": "Dan",
+                "subject": "ZesA8F",
+                "newRoom": "132",
+                "type": "Mitbetr.",
+                "comments": "",
+                "classes": "8a, 8b, 8c, 8d"
+            },
+            {
+                "lessons": "6",
+                "absent": "Hz",
+                "replacement": "Bre",
+                "subject": "ZesA8M",
+                "newRoom": "131",
+                "type": "S. Vertr.",
+                "comments": "",
+                "classes": "8a, 8b, 8c, 8d"
+            },
+            {
+                "lessons": "1",
+                "absent": "Kie",
+                "replacement": "---",
+                "subject": "Wph",
+                "newRoom": "---",
+                "type": "Entfall",
+                "comments": "Testung in 2. Stunde",
+                "classes": "8c, 8a, 8d, 8b"
+            },
+            {
+                "lessons": "2",
+                "absent": "Kie",
+                "replacement": "Hmg",
+                "subject": "Wph",
+                "newRoom": "052",
+                "type": "Mitbetr.",
+                "comments": "Testung um 9.15 Uhr bei Herrn Hellmig (Raum 023 oder draußen)",
+                "classes": "8c, 8a, 8d, 8b"
+            },
+            {
+                "lessons": "3",
+                "absent": "Hz",
+                "replacement": "Spr",
+                "subject": "Ma",
+                "newRoom": "153",
+                "type": "Verlegung",
+                "comments": "statt 7. Stunde",
+                "classes": "8c"
+            },
+            {
+                "lessons": "4",
+                "absent": "Hz",
+                "replacement": "Kai",
+                "subject": "Ma",
+                "newRoom": "153",
+                "type": "Verlegung",
+                "comments": "statt 8. Stunde",
+                "classes": "8c"
+            },
+            {
+                "lessons": "7",
+                "absent": "Spr",
+                "replacement": "---",
+                "subject": "En",
+                "newRoom": "---",
+                "type": "Entfall",
+                "comments": "verlegt in 3. Stunde",
+                "classes": "8c"
+            },
+            {
+                "lessons": "8",
+                "absent": "Kai",
+                "replacement": "---",
+                "subject": "Ge",
+                "newRoom": "---",
+                "type": "Entfall",
+                "comments": "verlegt in 4. Stunde",
+                "classes": "8c"
+            },
+            {
+                "lessons": "5",
+                "absent": "Pz",
+                "replacement": "Pz",
+                "subject": "E2",
+                "newRoom": "032",
+                "type": "Raumänd.",
+                "comments": "",
+                "classes": "9a"
+            },
+            {
+                "lessons": "1",
+                "absent": "Mun",
+                "replacement": "---",
+                "subject": "Fr",
+                "newRoom": "---",
+                "type": "Entfall",
+                "comments": "",
+                "classes": "9b"
+            },
+            {
+                "lessons": "1 - 2",
+                "absent": "Fel",
+                "replacement": "---",
+                "subject": "Fr",
+                "newRoom": "---",
+                "type": "Entfall",
+                "comments": "",
+                "classes": "9d"
+            },
+            {
+                "lessons": "5",
+                "absent": "Dm",
+                "replacement": "Dm",
+                "subject": "D",
+                "newRoom": "153",
+                "type": "Raumänd.",
+                "comments": "",
+                "classes": "9d"
+            },
+            {
+                "lessons": "8",
+                "absent": "Eis",
+                "replacement": "---",
+                "subject": "Ge",
+                "newRoom": "---",
+                "type": "Entfall",
+                "comments": "verlegt auf Mo 5. Stunde",
+                "classes": "9d"
+            },
+            {
+                "lessons": "7",
+                "absent": "Heh",
+                "replacement": "Ko",
+                "subject": "Pb",
+                "newRoom": "233",
+                "type": "Vertr.",
+                "comments": "",
+                "classes": "10a"
+            },
+            {
+                "lessons": "6",
+                "absent": "Heh",
+                "replacement": "Heb",
+                "subject": "Ma",
+                "newRoom": "023",
+                "type": "S. Vertr.",
+                "comments": "",
+                "classes": "10b"
+            },
+            {
+                "lessons": "8",
+                "absent": "Hz",
+                "replacement": "---",
+                "subject": "Win3",
+                "newRoom": "---",
+                "type": "Entfall",
+                "comments": "",
+                "classes": "10b, 10e"
+            },
+            {
+                "lessons": "1",
+                "absent": "Bre",
+                "replacement": "---",
+                "subject": "Testen",
+                "newRoom": "---",
+                "type": "Entfall",
+                "comments": "verlegt in 2. Stunde",
+                "classes": "10c"
+            },
+            {
+                "lessons": "2",
+                "absent": "Mun",
+                "replacement": "Bre",
+                "subject": "Fr",
+                "newRoom": "202",
+                "type": "Verlegung",
+                "comments": "Testung in 2. Stunde",
+                "classes": "10c"
+            },
+            {
+                "lessons": "1",
+                "absent": "BW",
+                "replacement": "---",
+                "subject": "Fr",
+                "newRoom": "---",
+                "type": "Entfall",
+                "comments": "verlegt in 2. Stunde",
+                "classes": "10e"
+            },
+            {
+                "lessons": "2",
+                "absent": "De",
+                "replacement": "BW",
+                "subject": "Sp",
+                "newRoom": "201",
+                "type": "Verlegung",
+                "comments": "statt 1. Stunde",
+                "classes": "10e"
+            },
+            {
+                "lessons": "3",
+                "absent": "De",
+                "replacement": "Gka",
+                "subject": "D",
+                "newRoom": "201",
+                "type": "Vertr.",
+                "comments": "",
+                "classes": "10e"
+            },
+            {
+                "lessons": "4",
+                "absent": "De",
+                "replacement": "Heb",
+                "subject": "D",
+                "newRoom": "201",
+                "type": "Vertr.",
+                "comments": "",
+                "classes": "10e"
+            },
+            {
+                "lessons": "3",
+                "absent": "Mun",
+                "replacement": "So",
+                "subject": "LFR1",
+                "newRoom": "055",
+                "type": "Vertr.",
+                "comments": "Testung um 9.45 Uhr vor Haupteingang",
+                "classes": "11"
+            },
+            {
+                "lessons": "3",
+                "absent": "Kie",
+                "replacement": "So",
+                "subject": "LPH1",
+                "newRoom": "055",
+                "type": "Vertr.",
+                "comments": "Testung um 9.45 Uhr vor Haupteingang mit So",
+                "classes": "11"
+            },
+            {
+                "lessons": "4",
+                "absent": "Mun",
+                "replacement": "+",
+                "subject": "LFR1",
+                "newRoom": "???",
+                "type": "EVA",
+                "comments": "",
+                "classes": "11"
+            },
+            {
+                "lessons": "4",
+                "absent": "Kie",
+                "replacement": "+",
+                "subject": "LPH1",
+                "newRoom": "055",
+                "type": "EVA",
+                "comments": "",
+                "classes": "11"
+            },
+            {
+                "lessons": "5-6",
+                "absent": "",
+                "replacement": "",
+                "subject": "",
+                "newRoom": "",
+                "type": "Veranst.",
+                "comments": "GK Deu Klausur Q1",
+                "classes": "11"
+            },
+            {
+                "lessons": "8",
+                "absent": "De",
+                "replacement": "+",
+                "subject": "Bm2",
+                "newRoom": "Th1, Th2, Th3",
+                "type": "EVA",
+                "comments": "",
+                "classes": "11, 12"
+            },
+            {
+                "lessons": "9",
+                "absent": "De",
+                "replacement": "+",
+                "subject": "Bm2",
+                "newRoom": "Th1, Th2, Th3",
+                "type": "EVA",
+                "comments": "",
+                "classes": "11, 12"
+            },
+            {
+                "lessons": "1 - 2",
+                "absent": "Heh",
+                "replacement": "+",
+                "subject": "Gma4",
+                "newRoom": "051",
+                "type": "EVA",
+                "comments": "",
+                "classes": "12"
+            },
+            {
+                "lessons": "1 - 2",
+                "absent": "Hz",
+                "replacement": "+",
+                "subject": "Gde4",
+                "newRoom": "154",
+                "type": "EVA",
+                "comments": "",
+                "classes": "12"
+            },
+            {
+                "lessons": "3 - 4",
+                "absent": "Stu",
+                "replacement": "Stu",
+                "subject": "LPL1",
+                "newRoom": "251",
+                "type": "Raumänd.",
+                "comments": "",
+                "classes": "12"
+            },
+            {
+                "lessons": "3 - 4",
+                "absent": "Kna",
+                "replacement": "Kna",
+                "subject": "LIN1",
+                "newRoom": "152",
+                "type": "Raumänd.",
+                "comments": "",
+                "classes": "12"
+            },
+            {
+                "lessons": "5",
+                "absent": "Heh",
+                "replacement": "+",
+                "subject": "Gma1",
+                "newRoom": "???",
+                "type": "EVA",
+                "comments": "",
+                "classes": "12"
+            },
+            {
+                "lessons": "6 - 7",
+                "absent": "Red",
+                "replacement": "Red",
+                "subject": "Gpy2",
+                "newRoom": "312",
+                "type": "Raumänd.",
+                "comments": "",
+                "classes": "12"
+            },
+            {
+                "lessons": "6 - 7",
+                "absent": "De",
+                "replacement": "+",
+                "subject": "Gde5",
+                "newRoom": "031",
+                "type": "EVA",
+                "comments": "",
+                "classes": "12"
+            },
+            {
+                "lessons": "8 - 9",
+                "absent": "Heh",
+                "replacement": "---",
+                "subject": "AG",
+                "newRoom": "---",
+                "type": "Entfall",
+                "comments": "",
+                "classes": ""
+            }
+        ]
+    }
+}

@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Text, View, ScrollView, SafeAreaView } from 'react-native';
-import { plan_array_today, plan_length } from '../components/api';
+import { plan } from '../components/api';
 import { styles } from '../style/styles';
 import Tile from '../components/tile';
 import { Icon } from 'react-native-elements';
@@ -10,13 +10,24 @@ export default function Home_Today({ navigation }) {
 
     const tiles_array_today = []
 
-    const getPlans = () => {
-        for (let i = 0; i < plan_length; i++) {
-            tiles_array_today.push(<Tile key={i + 1} text={plan_array_today[i][0]} lessons={plan_array_today[i][3]} kind={plan_array_today[i][7]} room={plan_array_today[i][4]} comment={plan_array_today[i][2]} class={plan_array_today[i][1]}></Tile>)
-        }
+    const createTiles = () => {
+        const planInfo = plan.today.information;
+        for (let i = 0; i < planInfo.length; i++) {
+            if (planInfo[i]["classes"] === "12" || planInfo[i]["classes"] === "11, 12")
+            tiles_array_today.push(<Tile 
+                key={i + 1} 
+                text={planInfo[i]["replacement"]} 
+                lessons={planInfo[i]["lessons"]} 
+                kind={planInfo[i]["type"]}
+                room={planInfo[i]["newRoom"]}
+                comment={planInfo[i]["comments"]}
+                class={planInfo[i]["classes"]}
+                subject={planInfo[i]["subject"]}
+            />);
+        };
     };
 
-    getPlans();
+    createTiles();
 
     return (
         <View style={styles.container}>
@@ -26,7 +37,7 @@ export default function Home_Today({ navigation }) {
                 </View>
                 <StatusBar style="auto" />
                 <View style={styles.wrapper}>
-                    <Text style={styles.header}>Vertretungsplan</Text>
+                    <Text style={styles.header}>GoethePlan</Text>
                     <View style={styles.scrollWrapper}>
 
                         <Text style={styles.textDay}>Heute:</Text>

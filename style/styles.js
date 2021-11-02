@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     },
     scrollWrapper: {
         marginTop: 20,
-        marginBottom: 160,
+        marginBottom: 165,
     },
     textDay: {
         fontWeight: 'bold',
@@ -29,20 +29,21 @@ const styles = StyleSheet.create({
 
 const itemStyle = StyleSheet.create({
     item: {
-        backgroundColor: 'orange',
         // alignItems: 'center',
         justifyContent: 'space-between',
-        marginBottom: 10,
+        marginBottom: 8,
         borderRadius: 15,
         flexDirection: 'row',
     },
     itemText: {
+        // color: "white",
         fontSize: 12,
     },
     itemTeacher: {
-        justifyContent: 'flex-start',
+        // justifyContent: 'flex-start',
+        justifyContent: 'center',
         marginRight: 0,
-        marginTop: 5,
+        marginTop: 0,
     },
     itemCircle: {
         alignItems: 'center',
@@ -68,43 +69,5 @@ const itemStyle = StyleSheet.create({
     }
 });
 
-const modalStyle = StyleSheet.create({
-    modalView: {
-        margin: 20,
-        backgroundColor: "white",
-        borderRadius: 20,
-        padding: 35,
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5
-    },
-    button: {
-        borderRadius: 20,
-        padding: 10,
-        elevation: 2
-    },
-    buttonOpen: {
-        backgroundColor: "#F194FF",
-    },
-    buttonClose: {
-        backgroundColor: "#2196F3",
-    },
-    textStyle: {
-        color: "white",
-        fontWeight: "bold",
-        textAlign: "center"
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: "center"
-    }
-})
 
-
-export { styles, itemStyle, modalStyle };
+export { styles, itemStyle };

@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Text, View, ScrollView, SafeAreaView } from 'react-native';
-import { plan_array_tomorrow, plan_tomorrow_length } from '../components/api';
+import { plan } from '../components/api';
 import { styles } from '../style/styles';
 import Tile from '../components/tile';
 import { Icon } from 'react-native-elements';
@@ -10,14 +10,30 @@ export default function Home_Tomorrow({ navigation }) {
 
     const tiles_array_tomorrow = []
 
-    const getPlans = () => {
-
-        for (let i = 0; i < plan_tomorrow_length; i++) {
-            tiles_array_tomorrow.push(<Tile key={i + 1} text={plan_array_tomorrow[i][0]} lessons={plan_array_tomorrow[i][3]} kind={plan_array_tomorrow[i][7]} room={plan_array_tomorrow[i][4]} comment={plan_array_tomorrow[i][2]} class={plan_array_tomorrow[i][1]}></Tile>) // props needs to be changed to plan_array_tomorrow, as soon as it is available
+    const createTiles = () => {
+        try {
+            const planInfo = plan.tomorrow.information;
+            for (let i = 0; i < planInfo.length; i++) {
+                console.log("KLASSES :: ", planInfo[i]["classes"]);
+                if (planInfo[i]["classes"] === "12" || planInfo[i]["classes"] === "11, 12") {
+                    tiles_array_tomorrow.push(<Tile
+                        key={i + 1}
+                        text={planInfo[i]["replacement"]}
+                        lessons={planInfo[i]["lessons"]}
+                        kind={planInfo[i]["type"]}
+                        room={planInfo[i]["newRoom"]}
+                        comment={planInfo[i]["comments"]}
+                        class={planInfo[i]["classes"]}
+                        subject={planInfo[i]["subject"]}
+                    />);
+                }
+            };
+        } catch (err) {
+            console.warn("ERROR :: ", err);
         }
     };
 
-    getPlans();
+    createTiles();
 
     return (
         <View style={styles.container}>
