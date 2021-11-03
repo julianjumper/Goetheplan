@@ -14,7 +14,6 @@ export default function Home_Tomorrow({ navigation }) {
         try {
             const planInfo = plan.tomorrow.information;
             for (let i = 0; i < planInfo.length; i++) {
-                console.log("KLASSES :: ", planInfo[i]["classes"]);
                 if (planInfo[i]["classes"] === "12" || planInfo[i]["classes"] === "11, 12") {
                     tiles_array_tomorrow.push(<Tile
                         key={i + 1}
