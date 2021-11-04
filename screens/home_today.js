@@ -1,41 +1,67 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { Text, View, ScrollView, SafeAreaView, ActivityIndicator } from 'react-native';
-import { plan, fetchData_today } from '../components/api';
+import { Text, View, ScrollView, SafeAreaView, Button, ActivityIndicator } from 'react-native';
+import { fetchData_today } from '../components/api';
 import { styles } from '../style/styles';
 import Tile from '../components/tile';
 import { Icon } from 'react-native-elements';
+import DefaultPreference from 'react-native-default-preference';
+import { checkConnection } from '../components/checkInternet';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Home_Today({ navigation }) {
 
     const tiles_array_today = []
-    let data = 0;
 
-    const [isLoading, setLoading] = useState(true);
     let load = true;
 
     const fetchData = () => {
-        useEffect(() => {
-            data = fetchData_today();
-            console.log("bisschen fetchpen");
-            () => setLoading(false);
-        }, []);
-    };
-
-    const fetchData2 = () => {
         load = true;
-        const _data = fetchData_today();
+        const _data = 0;
         return _data;
     };
 
-    const createTiles2 = () => {
-        // data = fetchData_today();
-        data = fetchData2();
+    const getData = async () => {
+        try {
+            const value = await AsyncStorage.getItem('@storage_Key')
+            if (value !== null) {
+                console.log("hier_", value);
+            }
+        } catch (e) {
+            console.warn("e", e);
+        }
+    }
+
+    const initialiseTiles = () => {
+        let data = 0;
+        try {
+            data = fetchData_today();
+        } catch (err) { console.log(err) }
+        try {
+            const isConnected = checkConnection();
+            console.log(isConnected);
+            if (isConnected) {
+                createTiles(data);
+            } else {
+                let value = 0;
+                try {
+                    getData()
+                } catch (err) { console.log(err) }
+                createTiles(value);
+            }
+        } catch (err) {
+            console.warn(err);
+            alert("Der Vertretungsplan konnte nicht geladen werden. Überprüfen Sie Ihre Netzwerkverbindung.");
+        };
+        load = false;
+    };
+
+    const createTiles = (data) => {
         for (let i = 0; i < data.length; i++) {
             if (data[i]["classes"] === "12" || data[i]["classes"] === "11, 12")
                 tiles_array_today.push(<Tile
                     key={i + 1}
-                    text={data[i]["replacement"]}
+                    text={data[i]["absent"]}
                     lessons={data[i]["lessons"]}
                     kind={data[i]["type"]}
                     room={data[i]["newRoom"]}
@@ -44,10 +70,8 @@ export default function Home_Today({ navigation }) {
                     subject={data[i]["subject"]}
                 />);
         };
-        console.warn("TYPE OF tiles_array_today", typeof tiles_array_today);
-    };
-
-    createTiles2();
+    }
+    initialiseTiles();
 
     const getLoad = () => {
         return load;
@@ -65,9 +89,8 @@ export default function Home_Today({ navigation }) {
 
                     <View style={styles.scrollWrapper}>
                         <Text style={styles.textDay}>Heute:</Text>
-
                         <ScrollView>
-                            { tiles_array_today }
+                            {load ? <ActivityIndicator /> : tiles_array_today}
                         </ScrollView>
 
                     </View>
