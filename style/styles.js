@@ -69,5 +69,44 @@ const itemStyle = StyleSheet.create({
     }
 });
 
+const stylesSettings = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        // justifyContent: 'center',
+    },
+    header: {
+        fontWeight: "bold",
+        fontSize: 30,
+    },
+    headerWrapper: {
+        marginTop: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    header2: {
+        fontWeight: "bold",
+        fontSize: 20,
+    },
+    headerWrapper2: {
+        marginBottom: 50,
+        marginTop: 20,
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+    },
+    headerWrapperWrapper: {
+        alignItems: 'flex-start',
+        justifyContent: 'flex-start',
+    },
+    pickerWrapper: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    picker: {
+        marginLeft: 50,
+    }
+});
 
-export { styles, itemStyle };
+export { styles, itemStyle, stylesSettings };

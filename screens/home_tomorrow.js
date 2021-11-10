@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Text, View, ScrollView, SafeAreaView, ActivityIndicator } from 'react-native';
 import { plan } from '../components/api';
-import { fetchData_tomorrow } from '../components/api2';
+import { fetchData_tomorrow } from '../components/api';
 import { styles } from '../style/styles';
 import Tile from '../components/tile';
 import { Icon } from 'react-native-elements';

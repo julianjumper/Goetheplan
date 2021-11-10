@@ -7,67 +7,69 @@ import Tile from '../components/tile';
 import { Icon } from 'react-native-elements';
 import { checkConnection } from '../components/checkInternet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNetInfo } from "@react-native-community/netinfo";
 const { width, height } = Dimensions.get("window");
 
 export default function Home_Today({ navigation }) {
 
-    const [_value, setValue] = useState({});
-   /*  const [isConnected, setConnected] = useState(() => {
-        useNetInfo().isConnected
-    }); */
-    const isConnected = useNetInfo().isConnected
-    const [apiData, setApiData] = useState({});
+    let tiles_array_today = []
+    let isConnected = false;
+    let data = 0;
 
-     useEffect(() => {
+    let load = true;
 
-        fetch('http:localhost:8080/timetables?username=311441&password=schuleisttoll')
-        .then(data => data.json()
-            .then(json => {
-                setApiData(json.today.information);
-                const jsonData = JSON.stringify(json.today.information);
-                try {
-                    AsyncStorage.setItem('@storage_Key', jsonData);
-                } catch (err) { console.warn("in asycn set: ", err) }
-            })).catch(err => console.log("Catched:", err))
-
-        getData();
-
-    }, []); 
+    const fetchData = () => {
+        load = true;
+        const _data = 0;
+        return _data;
+    };
 
     const getData = async () => {
         try {
             const value = await AsyncStorage.getItem('@storage_Key');
-            if (value !== null && typeof value !== 'undefined') {
-                setValue(() => JSON.parse(value));
-            } else { console.log("If nicht erfüllt"); return {}}
+            // console.warn("value is:", value);
+            if (value !== null) {
+                createTiles(JSON.parse(value));
+            } else { console.log("If nicht erfüllt"); }
         } catch (e) {
             console.warn("e:", e);
         }
     }
 
-    let load = true;
-
     const initialiseTiles = () => {
+        // let data = 0;
+
         try {
+            data = fetchData_today();
+        } catch (err) { console.warn('data did not fetch:', err) }
+
+        try {
+            isConnected = checkConnection();
+        } catch (err) { console.log('coudl not check internet connection') }
+        try {
+            // isConnected = false;0
+            console.log("hab ich internet?:", isConnected);
             if (isConnected || isConnected === null) {
-                createTiles(apiData);
+                console.log("wirklcih internet: ", isConnected)
+                createTiles(data);
             } else {
-                createTiles(_value);
+                console.log("else");
+                try {
+                    getData();
+                    // createTiles(value);
+                } catch (err) { console.log(err) }
             }
         } catch (err) {
-            console.warn('in initialiseTiles', err);
+            console.warn('second in intialisetIles', err);
             alert("Der Vertretungsplan konnte nicht geladen werden. Überprüfen Sie Ihre Netzwerkverbindung.");
         };
         load = false;
     };
 
-    let tiles_array_today;
-
     const createTiles = (_data) => {
         console.log("_data length ::", _data.length)
         tiles_array_today = [];
         for (let i = 0; i < _data.length; i++) {
+            //if (_data[i]["classes"] === "12" || _data[i]["classes"] === "11, 12")
             tiles_array_today.push(<Tile
                 key={i + 1}
                 text={_data[i]["absent"]}
@@ -77,11 +79,15 @@ export default function Home_Today({ navigation }) {
                 comment={_data[i]["comments"]}
                 class={_data[i]["classes"]}
                 subject={_data[i]["subject"]}
-            />); 
-        }; 
+            />);
+        };
     }
 
     initialiseTiles();
+
+    const getLoad = () => {
+        return load;
+    };
 
     return (
         <View style={styles.container}>
