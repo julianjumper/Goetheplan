@@ -8,24 +8,31 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "~1.15.0",
+    "@react-native-community/netinfo": "6.0.2",
     "@react-navigation/bottom-tabs": "^6.0.9",
     "@react-navigation/material-bottom-tabs": "^6.0.9",
     "@react-navigation/material-top-tabs": "^6.0.6",
     "@react-navigation/stack": "^6.0.11",
     "axios": "^0.24.0",
-    "expo": "~43.0.0",
+    "bluebird": "^3.7.2",
+    "expo": "^43.0.0",
     "expo-status-bar": "~1.1.0",
+    "metro-core": "^0.48.5",
+    "metro-react-native-babel-transformer": "^0.59.0",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.2",
+    "react-native-default-preference": "^1.4.3",
     "react-native-elements": "^3.4.2",
-    "react-native-gesture-handler": "^1.10.3",
-    "react-native-pager-view": "^5.4.8",
+    "react-native-gesture-handler": "~1.10.2",
+    "react-native-pager-view": "5.4.6",
     "react-native-paper": "^4.9.2",
     "react-native-picker-select": "^8.0.4",
     "react-native-tab-view": "^3.1.1",
     "react-native-vector-icons": "^9.0.0",
-    "react-native-web": "0.17.1"
+    "react-native-web": "0.17.1",
+    "standard-http-error": "^2.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"

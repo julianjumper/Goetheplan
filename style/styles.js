@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     },
     scrollWrapper: {
         marginTop: 20,
-        marginBottom: 165,
+        marginBottom: 180,
     },
     textDay: {
         fontWeight: 'bold',

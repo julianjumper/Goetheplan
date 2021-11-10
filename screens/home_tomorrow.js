@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Text, View, ScrollView, SafeAreaView } from 'react-native';
+import { Text, View, ScrollView, SafeAreaView, ActivityIndicator } from 'react-native';
 import { plan } from '../components/api';
+import { fetchData_tomorrow } from '../components/api2';
 import { styles } from '../style/styles';
 import Tile from '../components/tile';
 import { Icon } from 'react-native-elements';
@@ -10,30 +11,39 @@ export default function Home_Tomorrow({ navigation }) {
 
     const tiles_array_tomorrow = []
 
-    const createTiles = () => {
+    let load = true;
+
+    const fetchData = () => {
+        load = true;
+        const _data = fetchData_tomorrow();
+        return _data;
+    };
+
+    const createTiles = (_data) => {
         try {
-            const planInfo = plan.tomorrow.information;
-            for (let i = 0; i < planInfo.length; i++) {
-                console.log("KLASSES :: ", planInfo[i]["classes"]);
-                if (planInfo[i]["classes"] === "12" || planInfo[i]["classes"] === "11, 12") {
+            const data = fetchData();
+            for (let i = 0; i < data.length; i++) {
+                if (data[i]["classes"] === "12" || data[i]["classes"] === "11, 12") {
                     tiles_array_tomorrow.push(<Tile
                         key={i + 1}
-                        text={planInfo[i]["replacement"]}
-                        lessons={planInfo[i]["lessons"]}
-                        kind={planInfo[i]["type"]}
-                        room={planInfo[i]["newRoom"]}
-                        comment={planInfo[i]["comments"]}
-                        class={planInfo[i]["classes"]}
-                        subject={planInfo[i]["subject"]}
+                        text={data[i]["absent"]}
+                        lessons={data[i]["lessons"]}
+                        kind={data[i]["type"]}
+                        room={data[i]["newRoom"]}
+                        comment={data[i]["comments"]}
+                        class={data[i]["classes"]}
+                        subject={data[i]["subject"]}
                     />);
                 }
             };
         } catch (err) {
-            console.warn("ERROR :: ", err);
+            alert("Der Vertretungsplan konnte nicht geladen werden. Überprüfen Sie Ihre Netzwerkverbindung.");
         }
+        load = false;
     };
 
     createTiles();
+
 
     return (
         <View style={styles.container}>
@@ -48,7 +58,7 @@ export default function Home_Tomorrow({ navigation }) {
 
                         <Text style={styles.textDay}>Morgen:</Text>
                         <ScrollView>
-                            {tiles_array_tomorrow}
+                            {load ? <ActivityIndicator /> : tiles_array_tomorrow}
                         </ScrollView>
 
                     </View>
