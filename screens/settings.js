@@ -3,16 +3,21 @@ import { Alert, Modal, StyleSheet, Text, Pressable, View, TextInput } from 'reac
 import { modalStyle, stylesSettings } from '../style/styles';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNPickerSelect from 'react-native-picker-select';
 
 export default function Settings({ navigation }) {
 
-    const [modalVisible, setModalVisible] = useState(false);
+    function savePicker (value) {
+        try {
+            AsyncStorage.setItem('class', value);
+        } catch (err) { console.warn("in savePicker - error when saving: ", err) }
+    }
 
     return (
         <View style={stylesSettings.container}>
             <View style={stylesSettings.headerWrapper}>
-                <Text style={stylesSettings.header}>Settings</Text>
+                <Text style={stylesSettings.header}>Einstellungen</Text>
             </View>
             <View style={stylesSettings.headerWrapperWrapper}>
                 <View style={stylesSettings.headerWrapper2}>
@@ -28,8 +33,9 @@ export default function Settings({ navigation }) {
                 <RNPickerSelect
                     placeholder={{ label: 'Klasse...', value: null }}
                     style={stylesSettings.picker}
-                    onValueChange={(value) => console.log(value)}
+                    onValueChange={(value) => { console.log(value); savePicker(value); }}
                     items={[
+                        { label: '---', value: '---' },
                         { label: '7a', value: '7a' },
                         { label: '7b', value: '7b' },
                         { label: '7c', value: '7c' },
@@ -48,7 +54,7 @@ export default function Settings({ navigation }) {
                         { label: '10d', value: '10d' },
                         { label: '11', value: '11' },
                         { label: '12', value: '12' },
-
+                        { label: 'Team', value: 'Team' },
                     ]}
                 />
             </View>

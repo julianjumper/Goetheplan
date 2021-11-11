@@ -9,12 +9,13 @@ import { useNetInfo } from "@react-native-community/netinfo";
 const { width, height } = Dimensions.get("window");
 
 export default function Home_Tomorrow({ navigation }) {
-    const url = 'http://localhost:8080';
+    const url = 'http://192.168.178.23:8080';
 
     const [_value, setValue] = useState({});
     const isConnected = useNetInfo().isConnected;
     const [apiData, setApiData] = useState({});
     const [update, setUpdate] = useState(0);
+    const [classes, setClasses] = useState('---');
 
     let load = true;
 
@@ -31,6 +32,8 @@ export default function Home_Tomorrow({ navigation }) {
 
         getData();
 
+        getSavedClass();
+
     }, [update]);
 
     const getData = async () => {
@@ -38,6 +41,17 @@ export default function Home_Tomorrow({ navigation }) {
             const value = await AsyncStorage.getItem('@storage_Key_tomorrow');
             if (value !== null && typeof value !== 'undefined' && !isConnected) {
                 setValue(() => JSON.parse(value));
+            } else { console.log("If nicht erfüllt"); return {} }
+        } catch (e) {
+            console.warn("e:", e);
+        }
+    }
+
+    const getSavedClass = async () => {
+        try {
+            const value = await AsyncStorage.getItem('class');
+            if (value !== null) {
+                setClasses(() => value);
             } else { console.log("If nicht erfüllt"); return {} }
         } catch (e) {
             console.warn("e:", e);
@@ -64,6 +78,7 @@ export default function Home_Tomorrow({ navigation }) {
     const createTiles = (_data) => {
         tiles_array_tomorrow = [];
         for (let i = 0; i < _data.length; i++) {
+            if (_data[i]["classes"] === classes || _data[i["classes"] === '---'])
             tiles_array_tomorrow.push(<Tile
                 key={i + 1}
                 text={_data[i]["absent"]}

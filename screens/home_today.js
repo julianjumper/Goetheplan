@@ -10,12 +10,13 @@ const { width, height } = Dimensions.get("window");
 
 export default function Home_Today({ navigation }) {
 
-    const url = 'http://localhost:8080';
+    const url = 'http://192.168.178.23:8080';
 
     const [_value, setValue] = useState({});
     const isConnected = useNetInfo().isConnected;
     const [apiData, setApiData] = useState({});
     const [update, setUpdate] = useState(0);
+    const [classes, setClasses] = useState('---');
 
     useEffect(() => {
         fetch(`${url}/timetables?username=311441&password=schuleisttoll`)
@@ -29,6 +30,7 @@ export default function Home_Today({ navigation }) {
                 })).catch(err => console.log("Catched:", err))
 
         getData();
+        getSavedClass();
 
     }, [update]);
 
@@ -37,6 +39,17 @@ export default function Home_Today({ navigation }) {
             const value = await AsyncStorage.getItem('@storage_Key');
             if (value !== null && typeof value !== 'undefined' && !isConnected) {
                 setValue(() => JSON.parse(value));
+            } else { console.log("If nicht erfüllt"); return {} }
+        } catch (e) {
+            console.warn("e:", e);
+        }
+    }
+
+    const getSavedClass = async () => {
+        try {
+            const value = await AsyncStorage.getItem('class');
+            if (value !== null) {
+                setClasses(() => value);
             } else { console.log("If nicht erfüllt"); return {} }
         } catch (e) {
             console.warn("e:", e);
@@ -63,6 +76,7 @@ export default function Home_Today({ navigation }) {
     const createTiles = (_data) => {
         tiles_array_today = [];
         for (let i = 0; i < _data.length; i++) {
+            if (_data[i]["classes"] === classes || _data[i["classes"] === '---'])
             tiles_array_today.push(<Tile
                 key={i + 1}
                 text={_data[i]["absent"]}
