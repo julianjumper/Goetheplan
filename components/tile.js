@@ -7,7 +7,7 @@ const { width, height } = Dimensions.get("window");
 
 const calcTileDimensions = (deviceWidth, deviceHeight, tpr) => {
     const padding = 10
-    const height = (deviceHeight / 14)
+    const height = 67 // (deviceHeight / 14)
     const width = (deviceWidth / 1.34)
     return { width, height, padding };
 };
