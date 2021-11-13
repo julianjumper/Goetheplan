@@ -9,26 +9,33 @@ import { useNetInfo } from "@react-native-community/netinfo";
 const { width, height } = Dimensions.get("window");
 
 export default function Home_Tomorrow({ navigation }) {
+
     const url = 'http://192.168.178.23:8080';
+    const uname = '311441';
+    const password = 'schuleisttoll';
 
     const [_value, setValue] = useState({});
     const isConnected = useNetInfo().isConnected;
     const [apiData, setApiData] = useState({});
     const [update, setUpdate] = useState(0);
     const [classes, setClasses] = useState('---');
+    const [day, setDay] = useState("-");
+    const [date, setDate] = useState("xx.xx.202x");
 
     let load = true;
 
     useEffect(() => {
-        fetch(`${url}/timetables?username=311441&password=schuleisttoll`)
+        fetch(`${url}/timetables?username=${uname}&password=${password}`)
             .then(data => data.json()
                 .then(json => {
                     setApiData(json.tomorrow.information);
+                    setDay(json.tomorrow.day);
+                    setDate(json.tomorrow.date);
                     const jsonData = JSON.stringify(json.tomorrow.information);
                     try {
                         AsyncStorage.setItem('@storage_Key_tomorrow', jsonData);
                     } catch (err) { console.warn("in asycn set: ", err) }
-                })).catch(err => console.log("Catched:", err))
+                })).catch(err => alert("Fehler beim Laden des Vertretungsplans. Besteht eine Internetverbindung?"));
 
         getData();
 
@@ -50,6 +57,7 @@ export default function Home_Tomorrow({ navigation }) {
     const getSavedClass = async () => {
         try {
             const value = await AsyncStorage.getItem('class');
+            console.log("is value ungleich null:", value !== null)
             if (value !== null) {
                 setClasses(() => value);
             } else { console.log("If nicht erfüllt"); return {} }
@@ -68,7 +76,6 @@ export default function Home_Tomorrow({ navigation }) {
             }
         } catch (err) {
             console.warn('in initialiseTiles', err);
-            alert("Der Vertretungsplan konnte nicht geladen werden. Überprüfen Sie Ihre Netzwerkverbindung.");
         };
         load = false;
     };
@@ -78,18 +85,19 @@ export default function Home_Tomorrow({ navigation }) {
     const createTiles = (_data) => {
         tiles_array_tomorrow = [];
         for (let i = 0; i < _data.length; i++) {
-            if (_data[i]["classes"] === classes || _data[i["classes"] === '---'])
-            tiles_array_tomorrow.push(<Tile
-                key={i + 1}
-                text={_data[i]["absent"]}
-                lessons={_data[i]["lessons"]}
-                kind={_data[i]["type"]}
-                room={_data[i]["newRoom"]}
-                comment={_data[i]["comments"]}
-                class={_data[i]["classes"]}
-                subject={_data[i]["subject"]}
-            />);
+            if (_data[i]["classes"] === classes || classes === '---')
+                tiles_array_tomorrow.push(<Tile
+                    key={i + 1}
+                    text={_data[i]["absent"]}
+                    lessons={_data[i]["lessons"]}
+                    kind={_data[i]["type"]}
+                    room={_data[i]["newRoom"]}
+                    comment={_data[i]["comments"]}
+                    class={_data[i]["classes"]}
+                    subject={_data[i]["subject"]}
+                />);
         };
+        if (tiles_array_tomorrow === undefined || tiles_array_tomorrow.length == 0) tiles_array_tomorrow.push(<Text key={1}>Keine Einträge unter diesem Filter.</Text>)
     }
 
     initialiseTiles();
@@ -111,7 +119,7 @@ export default function Home_Tomorrow({ navigation }) {
                         <Text style={styles.header}>Vertretungsplan</Text>
                     </View>
                     <View style={styles.scrollWrapper}>
-                        <Text style={styles.textDay}>{"Morgen:"}</Text>
+                        <Text style={styles.textDay}>{"Morgen - "}{day}{","} {date}{":"}</Text>
                         <ScrollView>
                             {load ? <ActivityIndicator /> : tiles_array_tomorrow}
                         </ScrollView>

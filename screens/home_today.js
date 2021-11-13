@@ -11,18 +11,24 @@ const { width, height } = Dimensions.get("window");
 export default function Home_Today({ navigation }) {
 
     const url = 'http://192.168.178.23:8080';
+    const uname = '311441';
+    const password = 'schuleisttoll';
 
     const [_value, setValue] = useState({});
     const isConnected = useNetInfo().isConnected;
     const [apiData, setApiData] = useState({});
     const [update, setUpdate] = useState(0);
     const [classes, setClasses] = useState('---');
+    const [day, setDay] = useState("-");
+    const [date, setDate] = useState("xx.xx.202x");
 
     useEffect(() => {
-        fetch(`${url}/timetables?username=311441&password=schuleisttoll`)
+        fetch(`${url}/timetables?username=${uname}&password=${password}`)
             .then(data => data.json()
                 .then(json => {
                     setApiData(json.today.information);
+                    setDay(json.today.day);
+                    setDate(json.today.date);
                     const jsonData = JSON.stringify(json.today.information);
                     try {
                         AsyncStorage.setItem('@storage_Key', jsonData);
@@ -76,18 +82,19 @@ export default function Home_Today({ navigation }) {
     const createTiles = (_data) => {
         tiles_array_today = [];
         for (let i = 0; i < _data.length; i++) {
-            if (_data[i]["classes"] === classes || _data[i["classes"] === '---'])
-            tiles_array_today.push(<Tile
-                key={i + 1}
-                text={_data[i]["absent"]}
-                lessons={_data[i]["lessons"]}
-                kind={_data[i]["type"]}
-                room={_data[i]["newRoom"]}
-                comment={_data[i]["comments"]}
-                class={_data[i]["classes"]}
-                subject={_data[i]["subject"]}
-            />);
+            if (_data[i]["classes"] === classes || classes === '---')
+                tiles_array_today.push(<Tile
+                    key={i + 1}
+                    text={_data[i]["absent"]}
+                    lessons={_data[i]["lessons"]}
+                    kind={_data[i]["type"]}
+                    room={_data[i]["newRoom"]}
+                    comment={_data[i]["comments"]}
+                    class={_data[i]["classes"]}
+                    subject={_data[i]["subject"]}
+                />);
         };
+        if (tiles_array_today === undefined || tiles_array_today.length == 0) tiles_array_today.push(<Text key={1}>Keine Einträge unter diesem Filter.</Text>)
     }
 
     initialiseTiles();
@@ -109,7 +116,7 @@ export default function Home_Today({ navigation }) {
                         <Text style={styles.header}>Vertretungsplan</Text>
                     </View>
                     <View style={styles.scrollWrapper}>
-                        <Text style={styles.textDay}>{"Heute:"}</Text>
+                        <Text style={styles.textDay}>{"Heute - "}{day}{","} {date}{":"}</Text>
                         <ScrollView>
                             {load ? <ActivityIndicator /> : tiles_array_today}
                         </ScrollView>
