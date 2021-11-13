@@ -11,8 +11,9 @@ const baseUrl = 'http://localhost:8080';
 // const baseUrl = 'http://192.168.8.154:8080';
 const url = `${baseUrl}/timetables?username=311441&password=schuleisttoll`;
 
+const [data, setData] = useState([]);
+
 const fetchData_today = () => {
-    const [data, setData] = useState([]);
 
     useEffect(() => {
         fetch(url)
@@ -25,40 +26,28 @@ const fetchData_today = () => {
                 } catch (err) { console.warn("in asycn set: ", err) }
 
             })
-            .catch((err) => { 
-                console.warn("API gecatcht. Vermutlich kein Internet."); 
-                alert("1"); 
+            .catch((err) => {
+                console.warn("API gecatcht. Vermutlich kein Internet.");
+                alert("1");
             });
     }, []);
-
-    return data;
 };
 
 const fetchData_tomorrow = () => {
+    const [isLoading, setLoading] = useState(true);
     const [data, setData] = useState([]);
 
     useEffect(() => {
         fetch(url)
             .then((res) => res.json())
-            .then((json) => {
-                setData(json.tomorrow.information);
-                const jsonData = JSON.stringify(data);
-                try {
-                    AsyncStorage.setItem('@storage_Key_tomorrow', jsonData);
-                } catch (err) { console.warn("in asycn set: ", err) }
-
-            })
-            .catch((err) => { 
-                console.warn("API gecatcht. Vermutlich kein Internet."); 
-                alert("1"); 
-            });
+            .then((json) => setData(json.tomorrow.information))
+            .catch((err) => alert(err))
+            .finally(() => setLoading(false));
     }, []);
 
     return data;
 };
 
-
 const plan = require("./plan.json");
-
 
 export { fetchData_today, fetchData_tomorrow, plan };

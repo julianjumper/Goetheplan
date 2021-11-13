@@ -1,94 +1,115 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { Text, View, ScrollView, SafeAreaView, Button, ActivityIndicator } from 'react-native';
-import { fetchData_today } from '../components/api';
+import { Text, View, ScrollView, SafeAreaView, ActivityIndicator, Dimensions } from 'react-native';
 import { styles } from '../style/styles';
 import Tile from '../components/tile';
 import { Icon } from 'react-native-elements';
-import DefaultPreference from 'react-native-default-preference';
-import { checkConnection } from '../components/checkInternet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNetInfo } from "@react-native-community/netinfo";
+const { width, height } = Dimensions.get("window");
 
 export default function Home_Today({ navigation }) {
 
-    const tiles_array_today = []
+    const url = 'http://192.168.178.23:8080';
 
-    let load = true;
+    const [_value, setValue] = useState({});
+    const isConnected = useNetInfo().isConnected;
+    const [apiData, setApiData] = useState({});
+    const [update, setUpdate] = useState(0);
+    const [classes, setClasses] = useState('---');
 
-    const fetchData = () => {
-        load = true;
-        const _data = 0;
-        return _data;
-    };
+    useEffect(() => {
+        fetch(`${url}/timetables?username=311441&password=schuleisttoll`)
+            .then(data => data.json()
+                .then(json => {
+                    setApiData(json.today.information);
+                    const jsonData = JSON.stringify(json.today.information);
+                    try {
+                        AsyncStorage.setItem('@storage_Key', jsonData);
+                    } catch (err) { console.warn("in asycn set: ", err) }
+                })).catch(err => console.log("Catched:", err))
+
+        getData();
+        getSavedClass();
+
+    }, [update]);
 
     const getData = async () => {
         try {
-            const value = await AsyncStorage.getItem('@storage_Key')
-            if (value !== null) {
-                console.log("hier_", value);
-            }
+            const value = await AsyncStorage.getItem('@storage_Key');
+            if (value !== null && typeof value !== 'undefined' && !isConnected) {
+                setValue(() => JSON.parse(value));
+            } else { console.log("If nicht erfüllt"); return {} }
         } catch (e) {
-            console.warn("e", e);
+            console.warn("e:", e);
         }
     }
 
+    const getSavedClass = async () => {
+        try {
+            const value = await AsyncStorage.getItem('class');
+            if (value !== null) {
+                setClasses(() => value);
+            } else { console.log("If nicht erfüllt"); return {} }
+        } catch (e) {
+            console.warn("e:", e);
+        }
+    }
+
+    let load = true;
+
     const initialiseTiles = () => {
-        let data = 0;
         try {
-            data = fetchData_today();
-        } catch (err) { console.log(err) }
-        try {
-            const isConnected = checkConnection();
-            console.log(isConnected);
-            if (isConnected) {
-                createTiles(data);
+            if (isConnected || isConnected === null) {
+                createTiles(apiData);
             } else {
-                let value = 0;
-                try {
-                    getData()
-                } catch (err) { console.log(err) }
-                createTiles(value);
+                createTiles(_value);
             }
         } catch (err) {
-            console.warn(err);
             alert("Der Vertretungsplan konnte nicht geladen werden. Überprüfen Sie Ihre Netzwerkverbindung.");
         };
         load = false;
     };
 
-    const createTiles = (data) => {
-        for (let i = 0; i < data.length; i++) {
-            if (data[i]["classes"] === "12" || data[i]["classes"] === "11, 12")
-                tiles_array_today.push(<Tile
-                    key={i + 1}
-                    text={data[i]["absent"]}
-                    lessons={data[i]["lessons"]}
-                    kind={data[i]["type"]}
-                    room={data[i]["newRoom"]}
-                    comment={data[i]["comments"]}
-                    class={data[i]["classes"]}
-                    subject={data[i]["subject"]}
-                />);
+    let tiles_array_today;
+
+    const createTiles = (_data) => {
+        tiles_array_today = [];
+        for (let i = 0; i < _data.length; i++) {
+            if (_data[i]["classes"] === classes || _data[i["classes"] === '---'])
+            tiles_array_today.push(<Tile
+                key={i + 1}
+                text={_data[i]["absent"]}
+                lessons={_data[i]["lessons"]}
+                kind={_data[i]["type"]}
+                room={_data[i]["newRoom"]}
+                comment={_data[i]["comments"]}
+                class={_data[i]["classes"]}
+                subject={_data[i]["subject"]}
+            />);
         };
     }
-    initialiseTiles();
 
-    const getLoad = () => {
-        return load;
-    };
+    initialiseTiles();
 
     return (
         <View style={styles.container}>
-            <SafeAreaView>
-                <View style={{ alignItems: 'flex-end', marginLeft: 300, marginTop: 60, opacity: 0.8 }}>
-                    <Icon name='settings' onPress={() => navigation.navigate("Settings")} />
+            <SafeAreaView style={{ paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'stretch' }} width={width}>
+                    <View style={{ justifyContent: 'flex-start', alignItems: 'flex-start', marginLeft: 0, marginTop: 60, opacity: 0.8 }}>
+                        <Icon style={{ justifyContent: 'flex-start', alignItems: 'flex-start' }} name='sync' onPress={() => setUpdate(update + 1)} color='gray' />
+                    </View>
+                    <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', marginLeft: 0, marginTop: 60, opacity: 0.8 }}>
+                        <Icon style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }} name='settings' onPress={() => navigation.navigate("Settings")} />
+                    </View>
                 </View>
                 <StatusBar style="auto" />
                 <View style={styles.wrapper}>
-                    <Text style={styles.header}>Vertretungsplan</Text>
-
+                    <View style={{ alignItems: 'center', justifyContent: 'space-evenly', flexDirection: 'row' }}>
+                        <Text style={styles.header}>Vertretungsplan</Text>
+                    </View>
                     <View style={styles.scrollWrapper}>
-                        <Text style={styles.textDay}>Heute:</Text>
+                        <Text style={styles.textDay}>{"Heute:"}</Text>
                         <ScrollView>
                             {load ? <ActivityIndicator /> : tiles_array_today}
                         </ScrollView>
@@ -100,5 +121,3 @@ export default function Home_Today({ navigation }) {
         </View>
     );
 }
-
-// {isLoading ? (<ActivityIndicator />) : ({ tiles_array_today })}
