@@ -6,6 +6,7 @@ import Tile from '../components/tile';
 import { Icon } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNetInfo } from "@react-native-community/netinfo";
+import NewsTile from '../components/NewsTile';
 const { width, height } = Dimensions.get("window");
 
 export default function Home_Today({ navigation }) {
@@ -21,6 +22,7 @@ export default function Home_Today({ navigation }) {
     const [classes, setClasses] = useState('---');
     const [day, setDay] = useState("-");
     const [date, setDate] = useState("xx.xx.202x");
+    const [news, setNews] = useState("Keine Nachrichten.");
 
     useEffect(() => {
         fetch(`${url}/timetables?username=${uname}&password=${password}`)
@@ -29,6 +31,7 @@ export default function Home_Today({ navigation }) {
                     setApiData(json.today.information);
                     setDay(json.today.day);
                     setDate(json.today.date);
+                    setNews(json.today.news);
                     const jsonData = JSON.stringify(json.today.information);
                     try {
                         AsyncStorage.setItem('@storage_Key', jsonData);
@@ -117,6 +120,7 @@ export default function Home_Today({ navigation }) {
                     </View>
                     <View style={styles.scrollWrapper}>
                         <Text style={styles.textDay}>{"Heute - "}{day}{","} {date}{":"}</Text>
+                        <NewsTile text={news} style={styles.news} />
                         <ScrollView>
                             {load ? <ActivityIndicator /> : tiles_array_today}
                         </ScrollView>

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Text, View, ScrollView, SafeAreaView, ActivityIndicator, Dimensions } from 'react-native';
 import { styles } from '../style/styles';
 import Tile from '../components/tile';
+import NewsTile from '../components/NewsTile';
 import { Icon } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNetInfo } from "@react-native-community/netinfo";
@@ -21,6 +22,7 @@ export default function Home_Tomorrow({ navigation }) {
     const [classes, setClasses] = useState('---');
     const [day, setDay] = useState("-");
     const [date, setDate] = useState("xx.xx.202x");
+    const [news, setNews] = useState("Keine Nachrichten.");
 
     let load = true;
 
@@ -31,6 +33,7 @@ export default function Home_Tomorrow({ navigation }) {
                     setApiData(json.tomorrow.information);
                     setDay(json.tomorrow.day);
                     setDate(json.tomorrow.date);
+                    setNews(json.tomorrow.news);
                     const jsonData = JSON.stringify(json.tomorrow.information);
                     try {
                         AsyncStorage.setItem('@storage_Key_tomorrow', jsonData);
@@ -120,6 +123,7 @@ export default function Home_Tomorrow({ navigation }) {
                     </View>
                     <View style={styles.scrollWrapper}>
                         <Text style={styles.textDay}>{"Morgen - "}{day}{","} {date}{":"}</Text>
+                        <NewsTile text={news} style={styles.news} />
                         <ScrollView>
                             {load ? <ActivityIndicator /> : tiles_array_tomorrow}
                         </ScrollView>
