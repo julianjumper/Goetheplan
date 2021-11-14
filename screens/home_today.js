@@ -41,6 +41,12 @@ export default function Home_Today({ navigation }) {
         getData();
         getSavedClass();
 
+        const willFocusSubscription = navigation.addListener('focus', () => {
+            getSavedClass();
+        });
+
+        return willFocusSubscription;
+
     }, [update]);
 
     const getData = async () => {
