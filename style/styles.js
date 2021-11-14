@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Platform } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
+const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
     container: {
@@ -25,6 +26,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginTop: 10,
         marginBottom: 5,
+    },
+    news: {
+        marginRight: (width / 5)
     },
 });
 
@@ -110,4 +114,14 @@ const stylesSettings = StyleSheet.create({
     }
 });
 
-export { styles, itemStyle, stylesSettings };
+const newsStyle = StyleSheet.create({
+    newsWrapper: {
+        justifyContent: 'center',
+        margin: 5,
+    },
+    newsHeader: {
+        fontWeight: 'bold',
+    }
+});
+
+export { styles, itemStyle, stylesSettings, newsStyle };
