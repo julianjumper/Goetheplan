@@ -7,13 +7,12 @@ import NewsTile from '../components/NewsTile';
 import { Icon } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNetInfo } from "@react-native-community/netinfo";
+import { baseUrl } from '../components/api';
 const { width, height } = Dimensions.get("window");
 
 export default function Home_Tomorrow({ navigation }) {
 
     const url = 'http://192.168.178.23:8080';
-    const uname = '311441';
-    const password = 'schuleisttoll';
 
     const [_value, setValue] = useState({});
     const isConnected = useNetInfo().isConnected;
@@ -21,36 +20,75 @@ export default function Home_Tomorrow({ navigation }) {
     const [update, setUpdate] = useState(0);
     const [classes, setClasses] = useState('---');
     const [day, setDay] = useState("-");
-    const [date, setDate] = useState("xx.xx.202x");
+    const [date, setDate] = useState("xx.xx.xxxx");
     const [news, setNews] = useState("Keine Nachrichten.");
+    const [uname, setUname] = useState("");
+    const [password, setPassword] = useState("");
 
     let load = true;
 
     useEffect(() => {
+        startUp();
+
+        const willFocusSubscription = navigation.addListener('focus', () => {
+            startUp();
+        });
+
+        return willFocusSubscription;
+
+    }, [update, password, uname]);
+
+    function startUp() {
+        getSavedLogin();
+        if (uname === "" && password === "") return;
+        fetchEverything();
+        getData();
+        getSavedClass();
+        initialiseTiles();
+    }
+
+    function fetchEverything() {
         fetch(`${url}/timetables?username=${uname}&password=${password}`)
             .then(data => data.json()
-                .then(json => {
+                .then(json => { // .then( () => {} )
                     setApiData(json.tomorrow.information);
                     setDay(json.tomorrow.day);
                     setDate(json.tomorrow.date);
                     setNews(json.tomorrow.news);
                     const jsonData = JSON.stringify(json.tomorrow.information);
                     try {
-                        AsyncStorage.setItem('@storage_Key_tomorrow', jsonData);
-                    } catch (err) { console.warn("in asycn set: ", err) }
-                })).catch(err => alert("Fehler beim Laden des Vertretungsplans. Besteht eine Internetverbindung?"));
+                        AsyncStorage.setItem('@storage_Key', jsonData);
+                    } catch (err) { console.log("in asycn set: ", err) }
+                })).catch(err => { console.log("Catched:", err); }) // TODO: fix that it works wihtout restart    navigation.navigate("Landing")
+    }
 
-        getData();
+    async function getSavedLogin() {
+        try {
+            const value_uname = await AsyncStorage.getItem('username');
+            const value_password = await AsyncStorage.getItem('password');
+            if (value_uname !== null) {
+                setApiData({});
+                setUname(() => value_uname);
+            } else { navigation.navigate("Landing"); return {} }
+            
+            if (value_password !== null) {
+                setPassword(() => value_password);
+            } else { navigation.navigate("Landing"); return {} }
 
-        getSavedClass();
+            fetch(`${url}/timetables?username=${value_uname}&password=${value_password}`)
+            .then(data => data.json()
+                .then(json => { // .then( () => {} )
+                    if (json.tomorrow.information === null && isConnected) {
+                        navigation.navigate("Landing");
+                    }
+                })).catch(err => { console.warn("Catched:", err); console.log(isConnected); navigation.navigate("Landing")}) // TODO: fix that it works wihtout restart
 
-        const willFocusSubscription = navigation.addListener('focus', () => {
-            getSavedClass();
-        });
 
-        return willFocusSubscription;
-
-    }, [update]);
+    
+        } catch (e) {
+            console.warn("e:", e);
+        }
+    }
 
     const getData = async () => {
         try {

@@ -95,15 +95,23 @@ const stylesSettings = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 20,
     },
+    chooseClass: {
+        fontSize: 15,
+        paddingBottom: 5,
+    },
+    classWrapper: {
+        alignItems: 'center',
+    },
     headerWrapper2: {
         marginBottom: 50,
         marginTop: 20,
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     headerWrapperWrapper: {
-        alignItems: 'flex-start',
+        alignItems: 'center',
         justifyContent: 'flex-start',
+        marginTop: 40,
     },
     pickerWrapper: {
         alignItems: 'center',
@@ -111,6 +119,100 @@ const stylesSettings = StyleSheet.create({
     },
     picker: {
         marginLeft: 50,
+    },
+    inputStyle: {
+        width: width / 2,
+    },
+    button: {
+        width: width / 4,
+    },
+    aboutPage: {
+        position: 'absolute',
+        bottom: height/20,
+    },
+});
+
+
+const stylesLanding = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        paddingTop: height / 10
+        // justifyContent: 'center',
+    },
+    header: {
+        fontWeight: "bold",
+        fontSize: 30,
+    },
+    headerWrapper: {
+        // marginTop: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    header2: {
+        fontWeight: "bold",
+        fontSize: 20,
+    },
+    headerWrapper2: {
+        marginBottom: 50,
+        marginTop: height / 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    headerWrapperWrapper: {
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        marginTop: 40,
+    },
+    pickerWrapper: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    picker: {
+        marginLeft: 50,
+    },
+    inputStyle: {
+        width: width / 2,
+    },
+    button: {
+        width: width / 4,
+    }
+});
+
+const stylesAbout = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        // justifyContent: 'center',
+    },
+    header: {
+        fontWeight: "bold",
+        fontSize: 30,
+    },
+    headerWrapper: {
+        marginTop: height/100,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    textBody: {
+        marginHorizontal: width/8,
+    },
+    bodyText: {
+        textAlign: 'justify',
+    },
+    footer: {
+        position: 'absolute',
+        bottom: height/20,
+    },
+    footerText: {
+        color: 'rgb(168,168,168)',
+    },
+    scroller: {
+        marginBottom: height/8,
     }
 });
 
@@ -124,4 +226,4 @@ const newsStyle = StyleSheet.create({
     }
 });
 
-export { styles, itemStyle, stylesSettings, newsStyle };
+export { styles, itemStyle, stylesSettings, newsStyle, stylesLanding, stylesAbout };

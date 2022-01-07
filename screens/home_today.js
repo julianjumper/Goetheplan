@@ -7,13 +7,12 @@ import { Icon } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNetInfo } from "@react-native-community/netinfo";
 import NewsTile from '../components/NewsTile';
+
 const { width, height } = Dimensions.get("window");
 
 export default function Home_Today({ navigation }) {
 
     const url = 'http://192.168.178.23:8080';
-    const uname = '311441';
-    const password = 'schuleisttoll';
 
     const [_value, setValue] = useState({});
     const isConnected = useNetInfo().isConnected;
@@ -21,13 +20,35 @@ export default function Home_Today({ navigation }) {
     const [update, setUpdate] = useState(0);
     const [classes, setClasses] = useState('---');
     const [day, setDay] = useState("-");
-    const [date, setDate] = useState("xx.xx.202x");
+    const [date, setDate] = useState("xx.xx.xxxx");
     const [news, setNews] = useState("Keine Nachrichten.");
+    const [uname, setUname] = useState("");
+    const [password, setPassword] = useState("");
 
     useEffect(() => {
+        startUp();
+
+        const willFocusSubscription = navigation.addListener('focus', () => {
+            startUp();
+        });
+
+        return willFocusSubscription;
+
+    }, [update, password, uname]);
+
+    function startUp() {
+        getSavedLogin();
+        if (uname === "" && password === "") return;
+        fetchEverything();
+        getData();
+        getSavedClass();
+        initialiseTiles();
+    }
+
+    function fetchEverything() {
         fetch(`${url}/timetables?username=${uname}&password=${password}`)
             .then(data => data.json()
-                .then(json => {
+                .then(json => { // .then( () => {} )
                     setApiData(json.today.information);
                     setDay(json.today.day);
                     setDate(json.today.date);
@@ -36,25 +57,43 @@ export default function Home_Today({ navigation }) {
                     try {
                         AsyncStorage.setItem('@storage_Key', jsonData);
                     } catch (err) { console.warn("in asycn set: ", err) }
-                })).catch(err => console.log("Catched:", err))
-
-        getData();
-        getSavedClass();
-
-        const willFocusSubscription = navigation.addListener('focus', () => {
-            getSavedClass();
-        });
-
-        return willFocusSubscription;
-
-    }, [update]);
+                })).catch(err => { console.log("Catched:", err); }) // TODO: fix that it works wihtout restart    navigation.navigate("Landing")
+    }
 
     const getData = async () => {
         try {
             const value = await AsyncStorage.getItem('@storage_Key');
             if (value !== null && typeof value !== 'undefined' && !isConnected) {
                 setValue(() => JSON.parse(value));
-            } else { console.log("If nicht erfüllt"); return {} }
+            } else { return {} }
+        } catch (e) {
+            console.warn("e:", e);
+        }
+    }
+
+    async function getSavedLogin() {
+        try {
+            const value_uname = await AsyncStorage.getItem('username');
+            const value_password = await AsyncStorage.getItem('password');
+            if (value_uname !== null) {
+                setApiData({});
+                setUname(() => value_uname);
+            } else { navigation.navigate("Landing"); return {} }
+
+            if (value_password !== null) {
+                setPassword(() => value_password);
+            } else { navigation.navigate("Landing"); return {} }
+
+            fetch(`${url}/timetables?username=${value_uname}&password=${value_password}`)
+                .then(data => data.json()
+                    .then(json => { // .then( () => {} )
+                        if (json.today.information === null && isConnected) {
+                            navigation.navigate("Landing");
+                        }
+                    })).catch(err => { console.warn("Catched:", err); console.log(isConnected); if (isConnected) { console.log("verzweigung drin"); navigation.navigate("Landing") } }) // TODO: fix that it works wihtout restart
+
+
+
         } catch (e) {
             console.warn("e:", e);
         }
@@ -65,7 +104,7 @@ export default function Home_Today({ navigation }) {
             const value = await AsyncStorage.getItem('class');
             if (value !== null) {
                 setClasses(() => value);
-            } else { console.log("If nicht erfüllt"); return {} }
+            } else { return {} }
         } catch (e) {
             console.warn("e:", e);
         }

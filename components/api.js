@@ -61,4 +61,4 @@ const fetchData_tomorrow = () => {
 const plan = require("./plan.json");
 
 
-export { fetchData_today, fetchData_tomorrow, plan };
+export { fetchData_today, fetchData_tomorrow, plan, baseUrl };
