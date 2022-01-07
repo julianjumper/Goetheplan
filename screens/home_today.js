@@ -90,7 +90,7 @@ export default function Home_Today({ navigation }) {
                         if (json.today.information === null && isConnected) {
                             navigation.navigate("Landing");
                         }
-                    })).catch(err => { console.warn("Catched:", err); console.log(isConnected); if (isConnected) { console.log("verzweigung drin"); navigation.navigate("Landing") } }) // TODO: fix that it works wihtout restart
+                    })).catch(err => { console.log("Catched:", err); console.log(isConnected); if (isConnected) { console.log("verzweigung drin"); navigation.navigate("Landing") } }) // TODO: fix that it works wihtout restart
 
 
 

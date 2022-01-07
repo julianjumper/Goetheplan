@@ -81,7 +81,7 @@ export default function Home_Tomorrow({ navigation }) {
                     if (json.tomorrow.information === null && isConnected) {
                         navigation.navigate("Landing");
                     }
-                })).catch(err => { console.warn("Catched:", err); console.log(isConnected); navigation.navigate("Landing")}) // TODO: fix that it works wihtout restart
+                })).catch(err => { console.log("Catched:", err); console.log(isConnected); navigation.navigate("Landing")}) // TODO: fix that it works wihtout restart
 
 
     

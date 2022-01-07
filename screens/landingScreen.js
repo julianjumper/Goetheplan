@@ -20,7 +20,7 @@ export default function landingScreen({ navigation }) {
 
     useEffect(() => {
         getSavedClass();
-        getSavedLogin();
+        // getSavedLogin();
     }, [counter])
 
     const getSavedClass = async () => {
