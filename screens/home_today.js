@@ -10,12 +10,13 @@ import NetInfo from "@react-native-community/netinfo";
 import NewsTile from '../components/NewsTile';
 import { useInternetStatus } from '../components/internetStatus';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { _url } from '../components/api';
 
 const { width, height } = Dimensions.get("window");
 
 export default function Home_Today({ navigation }) {
 
-    const url = 'http://192.168.178.23:8080';
+    const url = _url // 'http://192.168.178.23:8080';
 
     const [_value, setValue] = useState({});
     // const isConnected = useNetInfo().isConnected;

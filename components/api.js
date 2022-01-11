@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const baseUrl = 'http://localhost:8080';
 // const baseUrl = 'http://192.168.178.174:8080';
 // const baseUrl = 'http://192.168.8.154:8080';
+const _url = 'http://192.168.178.48:8080';
 const url = `${baseUrl}/timetables?username=311441&password=schuleisttoll`;
 
 const fetchData_today = () => {
@@ -61,4 +62,4 @@ const fetchData_tomorrow = () => {
 const plan = require("./plan.json");
 
 
-export { fetchData_today, fetchData_tomorrow, plan, baseUrl };
+export { fetchData_today, fetchData_tomorrow, plan, baseUrl, _url };
