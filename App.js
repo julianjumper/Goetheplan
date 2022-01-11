@@ -9,6 +9,7 @@ import Home_Tomorrow from './screens/home_tomorrow';
 import landingScreen from './screens/landingScreen';
 import { createStackNavigator } from '@react-navigation/stack';
 import About from './screens/about'
+import Information from './screens/information'
 
 const Tab = createBottomTabNavigator();
 const stack = createStackNavigator();
@@ -39,6 +40,9 @@ export default function App() {
           gestureEnabled: false,
         }} />
         <stack.Screen name='About' component={About} />
+        <stack.Screen name='Information' component={Information} options={{
+          title: "Mehr Informationen..."
+        }} />
       </stack.Navigator>
     </NavigationContainer>
   );

@@ -16,10 +16,11 @@ const About = () => {
             <View style={stylesAbout.textBody}>
                 <ScrollView style={stylesAbout.scroller}>
 
+
                     <Text style={stylesAbout.bodyText}>
                         Ausgelöst durch regelmäßige Genervtheit bei der Nutzung der ursprünglichen Vertretungsplan-App, kam uns -
                         Fredrik Borck und Julian Springer - die Idee ganz schnell, eine eigene, bessere Alternative zu entwickeln
-                        und den Schülerinnen und Schüler bzw. den Lehrerinnen und Lehrer des Goethe-Gymnsiums zur Verfügung zu stellen,
+                        und den Schülerinnen und Schülern bzw. den Lehrerinnen und Lehrern des Goethe-Gymnsiums zur Verfügung zu stellen,
                         damit nicht auch ihr das gleiche Leiden durchleben müsst, wie wir es tagtäglich taten.
                         {'\n'}
                         Die App brachte viele Herausforderungen mit sich; daher teilten wir uns auf: {"\n"}
@@ -35,6 +36,28 @@ const About = () => {
                         {'\n'}
 
                         <B>Danke an alle Beteiligten</B> für die Untersützung. Wer hätte jemals erwarten können, dass eine deutsche Schule, so digital fähig sein kann.😘
+
+                        {'\n'}
+                        {'\n'}{'\n'}{'\n'}
+
+                        <B>Datenschutzerklärung gemäß §13, TMG</B>
+                        {'\n'}
+                        Bei der gesamten Nutzung der 'GoehteVertretungsplan'-Anwendung werden zu keinem Zeitpunkt etwaige personenbezogene Daten erhoben.
+
+                        {'\n'}{'\n'}
+
+                        <B>Impressum</B>{'\n'}
+
+                        Angaben gemäß § 5 TMG{'\n'}
+                        {'\n'}
+                        Julian Springer & Fredrik Borck{'\n'}
+                        Drakestraße 72{'\n'}
+                        12205 Berlin{'\n'}
+                        (Adresse des Goethe-Gymnasiums){'\n'}{'\n'}
+                        Kontakt:{'\n'}
+                        Telefon: +49 015161495657{'\n'}
+                        E-Mail: goethevertretungsplan@gmail.com{'\n'}
+
                     </Text>
                 </ScrollView>
             </View>

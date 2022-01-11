@@ -1,12 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Text, View, ScrollView, SafeAreaView, ActivityIndicator, Dimensions } from 'react-native';
 import { styles } from '../style/styles';
 import Tile from '../components/tile';
 import { Icon } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNetInfo } from "@react-native-community/netinfo";
+import NetInfo from "@react-native-community/netinfo";
 import NewsTile from '../components/NewsTile';
+import { useInternetStatus } from '../components/internetStatus';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const { width, height } = Dimensions.get("window");
 
@@ -15,7 +18,13 @@ export default function Home_Today({ navigation }) {
     const url = 'http://192.168.178.23:8080';
 
     const [_value, setValue] = useState({});
-    const isConnected = useNetInfo().isConnected;
+    // const isConnected = useNetInfo().isConnected;
+    // const [isConnected, setConnected] = useState();
+    const isConnected = useInternetStatus();
+
+    const [isModal, setModal] = useState(false);
+    const [whichModal, setWhichModal] = useState(null);
+
     const [apiData, setApiData] = useState({});
     const [update, setUpdate] = useState(0);
     const [classes, setClasses] = useState('---');
@@ -27,14 +36,13 @@ export default function Home_Today({ navigation }) {
 
     useEffect(() => {
         startUp();
-
         const willFocusSubscription = navigation.addListener('focus', () => {
             startUp();
-        });
 
+        });
         return willFocusSubscription;
 
-    }, [update, password, uname]);
+    }, [update, password, uname, isConnected, isModal]);
 
     function startUp() {
         getSavedLogin();
@@ -57,13 +65,13 @@ export default function Home_Today({ navigation }) {
                     try {
                         AsyncStorage.setItem('@storage_Key', jsonData);
                     } catch (err) { console.warn("in asycn set: ", err) }
-                })).catch(err => { console.log("Catched:", err); }) // TODO: fix that it works wihtout restart    navigation.navigate("Landing")
+                })).catch(err => { console.log("Catched in fetchEverything:", err); }) // TODO: fix that it works wihtout restart    navigation.navigate("Landing")
     }
 
     const getData = async () => {
         try {
             const value = await AsyncStorage.getItem('@storage_Key');
-            if (value !== null && typeof value !== 'undefined' && !isConnected) {
+            if ((value !== null && typeof value !== 'undefined')) {
                 setValue(() => JSON.parse(value));
             } else { return {} }
         } catch (e) {
@@ -90,7 +98,7 @@ export default function Home_Today({ navigation }) {
                         if (json.today.information === null && isConnected) {
                             navigation.navigate("Landing");
                         }
-                    })).catch(err => { console.log("Catched:", err); console.log(isConnected); if (isConnected) { console.log("verzweigung drin"); navigation.navigate("Landing") } }) // TODO: fix that it works wihtout restart
+                    })).catch(err => { console.log("Catched:", err); if (isConnected) { navigation.navigate("Landing") } }) // TODO: fix that it works wihtout restart
 
 
 
@@ -131,16 +139,23 @@ export default function Home_Today({ navigation }) {
         tiles_array_today = [];
         for (let i = 0; i < _data.length; i++) {
             if (_data[i]["classes"] === classes || classes === '---')
-                tiles_array_today.push(<Tile
-                    key={i + 1}
-                    text={_data[i]["absent"]}
-                    lessons={_data[i]["lessons"]}
-                    kind={_data[i]["type"]}
-                    room={_data[i]["newRoom"]}
-                    comment={_data[i]["comments"]}
-                    class={_data[i]["classes"]}
-                    subject={_data[i]["subject"]}
-                />);
+                tiles_array_today.push(
+                    <TouchableOpacity key={i + 1} onPress={() => {
+                        // navigation.navigate("Information", { informations: _data[i], number: i });
+                        if (_data[i]["comments"] !== "") {alert("Bemerkung:", _data[i]["comments"] )}
+                    }} >
+                        <Tile
+                            key={i + 1}
+                            text={_data[i]["absent"]}
+                            lessons={_data[i]["lessons"]}
+                            kind={_data[i]["type"]}
+                            room={_data[i]["newRoom"]}
+                            comment={_data[i]["comments"]}
+                            class={_data[i]["classes"]}
+                            subject={_data[i]["subject"]}
+                        />
+                    </TouchableOpacity>
+                );
         };
         if (tiles_array_today === undefined || tiles_array_today.length == 0) tiles_array_today.push(<Text key={1}>Keine Einträge unter diesem Filter.</Text>)
     }

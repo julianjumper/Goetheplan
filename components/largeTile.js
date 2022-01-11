@@ -7,7 +7,7 @@ const { width, height } = Dimensions.get("window");
 
 const calcTileDimensions = (deviceWidth, deviceHeight, tpr) => {
     const padding = 10
-    const height = 67 // (deviceHeight / 14)
+    const height = deviceHeight / 2 // (deviceHeight / 14)
     const width = (deviceWidth / 1.34)
     return { width, height, padding };
 };
@@ -119,27 +119,35 @@ function measureSize(kind) {
 }
 
 const Item = ({ width, height, padding, text, lessons, kind, kind_text_size, room, comment, _class, subject, color }) => (
-    <View style={[itemStyle.item, { width: width, height: height, paddingHorizontal: padding, backgroundColor: color }]}>
-        <View style={{ justifyContent: "center" }}>
-            <View style={[itemStyle.itemCircle, { width: height - 10, height: height - 10 }]}>
-                <Text style={itemStyle.lessonText}>{lessons}</Text>
+    <View style={[itemStyle.itemLarge, { width: width, height: height, paddingHorizontal: padding, backgroundColor: color }]}>
+
+        <View style={{ marginTop: height / 20, flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', flex: 1 }}>
+                <View style={[itemStyle.itemCircle, { width: height / 7, height: height / 13 }]}>
+                    <Text style={itemStyle.lessonText}>{lessons}</Text>
+                </View>
+                <View style={[itemStyle.itemCircle, { width: height / 5, height: height / 13 }]}>
+                    <Text style={itemStyle.lessonText}>{subject}</Text>
+                </View>
+                <View style={itemStyle.kindContainer}>
+                    <Text style={[itemStyle.kindText], { fontSize: kind_text_size, fontWeight: 'bold', }}>{kind}</Text>
+                </View>
             </View>
+
+
+
         </View>
-        <View style={[itemStyle.itemTeacher, { width: width / 2.3 },]}>
+        <View style={[itemStyle.itemCenter, { width: width / 2.3 },]}>
             <Text style={itemStyle.itemText}><B>Klasse:</B> {_class}</Text>
             <Text style={itemStyle.itemText}><B>Fach:</B> {subject}</Text>
             <Text style={itemStyle.itemText}><B>Lehrer:</B> {text}</Text>
             {room}
-        </View>
-        <View style={{ justifyContent: "center" }}>
-            <View style={itemStyle.kindContainer}>
-                <Text style={[itemStyle.kindText], { fontSize: kind_text_size, fontWeight: 'bold', }}>{kind}</Text>
-            </View>
+            <Text style={itemStyle.itemText}><B>Bemerkung:</B> {comment}</Text>
         </View>
     </View>
 )
 
-const Tile = (props) => {
+const LargeTile = (props) => {
     let _kind = props.kind;
     if (props.kind === "Unterricht geändert") {
         _kind = "Änderung";
@@ -159,5 +167,5 @@ const Tile = (props) => {
     )
 }
 
-export default Tile
+export default LargeTile
 

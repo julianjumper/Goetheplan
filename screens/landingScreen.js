@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View, StatusBar, Picker, Image } from 'react-native';
-import { Input, Button } from 'react-native-elements';
+import { Alert, Modal, StyleSheet, Text, Pressable, View, StatusBar, Picker, Image, Button as But } from 'react-native';
+import { Input, Button, Icon } from 'react-native-elements';
 import { modalStyle, styles, stylesLanding } from '../style/styles';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -94,7 +94,7 @@ export default function landingScreen({ navigation }) {
                             autoCorrect={false}
                         />
                     </View>
-                    <Button style={stylesLanding.button} title="Login" onPress={() => {savePassword_Username(); navigation.navigate("Home");}} />
+                    <Button style={stylesLanding.button} title="Login" onPress={() => { savePassword_Username(); navigation.navigate("Home"); }} />
                 </View>
                 <View>
                     <Text style={stylesLanding.header2}>Wähle deine Klasse (aktuell: {classes})</Text>
@@ -133,6 +133,9 @@ export default function landingScreen({ navigation }) {
                     ]}
                     pickerProps={{ style: { height: 214, overflow: 'hidden' } }}
                 />
+            </View>
+            <View style={stylesLanding.aboutPage} >
+                <Icon name='help' onPress={ () => navigation.navigate("About")} color='grey' />
             </View>
         </View>
     )

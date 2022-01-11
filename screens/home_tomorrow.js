@@ -1,21 +1,27 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Text, View, ScrollView, SafeAreaView, ActivityIndicator, Dimensions } from 'react-native';
 import { styles } from '../style/styles';
 import Tile from '../components/tile';
-import NewsTile from '../components/NewsTile';
 import { Icon } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNetInfo } from "@react-native-community/netinfo";
-import { baseUrl } from '../components/api';
+import NetInfo from "@react-native-community/netinfo";
+import NewsTile from '../components/NewsTile';
+import { useInternetStatus } from '../components/internetStatus';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+
 const { width, height } = Dimensions.get("window");
 
-export default function Home_Tomorrow({ navigation }) {
+export default function Home_tomorrow({ navigation }) {
 
     const url = 'http://192.168.178.23:8080';
 
     const [_value, setValue] = useState({});
-    const isConnected = useNetInfo().isConnected;
+    // const isConnected = useNetInfo().isConnected;
+    // const [isConnected, setConnected] = useState();
+    const isConnected = useInternetStatus();
+
     const [apiData, setApiData] = useState({});
     const [update, setUpdate] = useState(0);
     const [classes, setClasses] = useState('---');
@@ -25,18 +31,15 @@ export default function Home_Tomorrow({ navigation }) {
     const [uname, setUname] = useState("");
     const [password, setPassword] = useState("");
 
-    let load = true;
-
     useEffect(() => {
         startUp();
-
         const willFocusSubscription = navigation.addListener('focus', () => {
             startUp();
-        });
 
+        });
         return willFocusSubscription;
 
-    }, [update, password, uname]);
+    }, [update, password, uname, isConnected]);
 
     function startUp() {
         getSavedLogin();
@@ -57,9 +60,20 @@ export default function Home_Tomorrow({ navigation }) {
                     setNews(json.tomorrow.news);
                     const jsonData = JSON.stringify(json.tomorrow.information);
                     try {
-                        AsyncStorage.setItem('@storage_Key', jsonData);
-                    } catch (err) { console.log("in asycn set: ", err) }
-                })).catch(err => { console.log("Catched:", err); }) // TODO: fix that it works wihtout restart    navigation.navigate("Landing")
+                        AsyncStorage.setItem('@storage_Key_tomorrow', jsonData);
+                    } catch (err) { console.warn("in asycn set: ", err) }
+                })).catch(err => { console.log("Catched in fetchEverything:", err); }) // TODO: fix that it works wihtout restart    navigation.navigate("Landing")
+    }
+
+    const getData = async () => {
+        try {
+            const value = await AsyncStorage.getItem('@storage_Key_tomorrow');
+            if ((value !== null && typeof value !== 'undefined')) {
+                setValue(() => JSON.parse(value));
+            } else { return {} }
+        } catch (e) {
+            console.warn("e:", e);
+        }
     }
 
     async function getSavedLogin() {
@@ -70,32 +84,21 @@ export default function Home_Tomorrow({ navigation }) {
                 setApiData({});
                 setUname(() => value_uname);
             } else { navigation.navigate("Landing"); return {} }
-            
+
             if (value_password !== null) {
                 setPassword(() => value_password);
             } else { navigation.navigate("Landing"); return {} }
 
             fetch(`${url}/timetables?username=${value_uname}&password=${value_password}`)
-            .then(data => data.json()
-                .then(json => { // .then( () => {} )
-                    if (json.tomorrow.information === null && isConnected) {
-                        navigation.navigate("Landing");
-                    }
-                })).catch(err => { console.log("Catched:", err); console.log(isConnected); navigation.navigate("Landing")}) // TODO: fix that it works wihtout restart
+                .then(data => data.json()
+                    .then(json => { // .then( () => {} )
+                        if (json.tomorrow.information === null && isConnected) {
+                            navigation.navigate("Landing");
+                        }
+                    })).catch(err => { console.log("Catched:", err); if (isConnected) { navigation.navigate("Landing") } }) // TODO: fix that it works wihtout restart
 
 
-    
-        } catch (e) {
-            console.warn("e:", e);
-        }
-    }
 
-    const getData = async () => {
-        try {
-            const value = await AsyncStorage.getItem('@storage_Key_tomorrow');
-            if (value !== null && typeof value !== 'undefined' && !isConnected) {
-                setValue(() => JSON.parse(value));
-            } else { console.log("If nicht erfüllt"); return {} }
         } catch (e) {
             console.warn("e:", e);
         }
@@ -104,15 +107,15 @@ export default function Home_Tomorrow({ navigation }) {
     const getSavedClass = async () => {
         try {
             const value = await AsyncStorage.getItem('class');
-            console.log("is value ungleich null:", value !== null)
             if (value !== null) {
                 setClasses(() => value);
-            } else { console.log("If nicht erfüllt"); return {} }
+            } else { return {} }
         } catch (e) {
             console.warn("e:", e);
         }
     }
 
+    let load = true;
 
     const initialiseTiles = () => {
         try {
@@ -122,7 +125,7 @@ export default function Home_Tomorrow({ navigation }) {
                 createTiles(_value);
             }
         } catch (err) {
-            console.warn('in initialiseTiles', err);
+            alert("Der Vertretungsplan konnte nicht geladen werden. Überprüfen Sie Ihre Netzwerkverbindung.");
         };
         load = false;
     };
@@ -133,16 +136,22 @@ export default function Home_Tomorrow({ navigation }) {
         tiles_array_tomorrow = [];
         for (let i = 0; i < _data.length; i++) {
             if (_data[i]["classes"] === classes || classes === '---')
-                tiles_array_tomorrow.push(<Tile
-                    key={i + 1}
-                    text={_data[i]["absent"]}
-                    lessons={_data[i]["lessons"]}
-                    kind={_data[i]["type"]}
-                    room={_data[i]["newRoom"]}
-                    comment={_data[i]["comments"]}
-                    class={_data[i]["classes"]}
-                    subject={_data[i]["subject"]}
-                />);
+                tiles_array_tomorrow.push(
+                <TouchableOpacity key={i + 1} onPress={() => {
+                    navigation.navigate("Information", { informations: _data[i], number: i });
+                    // if (_data[i]["comments"] !== "") { alert("Bemerkung:", _data[i]["comments"]) }
+                }} >
+                    <Tile
+                        key={i + 1}
+                        text={_data[i]["absent"]}
+                        lessons={_data[i]["lessons"]}
+                        kind={_data[i]["type"]}
+                        room={_data[i]["newRoom"]}
+                        comment={_data[i]["comments"]}
+                        class={_data[i]["classes"]}
+                        subject={_data[i]["subject"]}
+                    />
+                </TouchableOpacity>);
         };
         if (tiles_array_tomorrow === undefined || tiles_array_tomorrow.length == 0) tiles_array_tomorrow.push(<Text key={1}>Keine Einträge unter diesem Filter.</Text>)
     }
@@ -179,4 +188,3 @@ export default function Home_Tomorrow({ navigation }) {
         </View>
     );
 }
-
