@@ -19,8 +19,6 @@ export default function Home_tomorrow({ navigation }) {
     const url = _url;
 
     const [_value, setValue] = useState({});
-    // const isConnected = useNetInfo().isConnected;
-    // const [isConnected, setConnected] = useState();
     const isConnected = useInternetStatus();
 
     const [apiData, setApiData] = useState({});
@@ -54,7 +52,7 @@ export default function Home_tomorrow({ navigation }) {
     function fetchEverything() {
         fetch(`${url}/timetables?username=${uname}&password=${password}`)
             .then(data => data.json()
-                .then(json => { // .then( () => {} )
+                .then(json => { 
                     setApiData(json.tomorrow.information);
                     setDay(json.tomorrow.day);
                     setDate(json.tomorrow.date);
@@ -63,7 +61,7 @@ export default function Home_tomorrow({ navigation }) {
                     try {
                         AsyncStorage.setItem('@storage_Key_tomorrow', jsonData);
                     } catch (err) { console.warn("in asycn set: ", err) }
-                })).catch(err => { console.log("Catched in fetchEverything:", err); }) // TODO: fix that it works wihtout restart    navigation.navigate("Landing")
+                })).catch(err => { console.log("Catched in fetchEverything:", err); }) 
     }
 
     const getData = async () => {
@@ -92,14 +90,11 @@ export default function Home_tomorrow({ navigation }) {
 
             fetch(`${url}/timetables?username=${value_uname}&password=${value_password}`)
                 .then(data => data.json()
-                    .then(json => { // .then( () => {} )
+                    .then(json => { 
                         if (json.tomorrow.information === null && isConnected) {
                             navigation.navigate("Landing");
                         }
-                    })).catch(err => { console.log("Catched:", err); if (isConnected) { navigation.navigate("Landing") } }) // TODO: fix that it works wihtout restart
-
-
-
+                    })).catch(err => { console.log("Catched:", err); if (isConnected) { navigation.navigate("Landing") } }) 
         } catch (e) {
             console.warn("e:", e);
         }
@@ -116,8 +111,6 @@ export default function Home_tomorrow({ navigation }) {
         }
     }
 
-    let load = true;
-
     const initialiseTiles = () => {
         try {
             if (isConnected || isConnected === null) {
@@ -128,7 +121,6 @@ export default function Home_tomorrow({ navigation }) {
         } catch (err) {
             alert("Der Vertretungsplan konnte nicht geladen werden. Überprüfen Sie Ihre Netzwerkverbindung.");
         };
-        load = false;
     };
 
     let tiles_array_tomorrow;
@@ -154,7 +146,6 @@ export default function Home_tomorrow({ navigation }) {
                     />
                 </TouchableOpacity>);
         };
-        if (tiles_array_tomorrow === undefined || tiles_array_tomorrow.length == 0) tiles_array_tomorrow.push(<Text key={1}>Keine Einträge unter diesem Filter.</Text>)
     }
 
     initialiseTiles();
@@ -179,7 +170,7 @@ export default function Home_tomorrow({ navigation }) {
                         <Text style={styles.textDay}>{"Morgen - "}{day}{","} {date}{":"}</Text>
                         <NewsTile text={news} style={styles.news} />
                         <ScrollView>
-                            {load ? <ActivityIndicator /> : tiles_array_tomorrow}
+                            {tiles_array_tomorrow.length === 0 ? <ActivityIndicator /> : tiles_array_tomorrow}
                         </ScrollView>
 
                     </View>

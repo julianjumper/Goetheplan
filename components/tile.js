@@ -112,8 +112,11 @@ function measureSize(kind) {
         case "Sondereins.":
             fontSize = 7;
             break;
+        case "Verlegung":
+            fontSize = 9;
+            break;
         default:
-            fontSize = 12;
+            fontSize = 7;
     }
     return fontSize
 }

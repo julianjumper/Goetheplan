@@ -9,7 +9,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const baseUrl = 'http://localhost:8080';
 // const baseUrl = 'http://192.168.178.174:8080';
 // const baseUrl = 'http://192.168.8.154:8080';
-const _url = 'http://192.168.178.48:8080';
+// const _url = 'http://localhost:8080' // 'http://192.168.178.48:8080';
+const _url = 'http://192.168.178.23:8080' // Julians Mac
 const url = `${baseUrl}/timetables?username=311441&password=schuleisttoll`;
 
 const fetchData_today = () => {

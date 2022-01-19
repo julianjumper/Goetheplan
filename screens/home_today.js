@@ -1,4 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
+import { setStatusBarTranslucent, StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect, useCallback } from 'react';
 import { Text, View, ScrollView, SafeAreaView, ActivityIndicator, Dimensions } from 'react-native';
 import { styles } from '../style/styles';
@@ -11,16 +11,15 @@ import NewsTile from '../components/NewsTile';
 import { useInternetStatus } from '../components/internetStatus';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { _url } from '../components/api';
+// import SafeViewAndroid from '../components/SafeViewAndroid';
 
 const { width, height } = Dimensions.get("window");
 
 export default function Home_Today({ navigation }) {
 
-    const url = _url // 'http://192.168.178.23:8080';
+    const url = _url 
 
     const [_value, setValue] = useState({});
-    // const isConnected = useNetInfo().isConnected;
-    // const [isConnected, setConnected] = useState();
     const isConnected = useInternetStatus();
 
     const [isModal, setModal] = useState(false);
@@ -38,8 +37,8 @@ export default function Home_Today({ navigation }) {
     useEffect(() => {
         startUp();
         const willFocusSubscription = navigation.addListener('focus', () => {
+            () => setLoad(true);
             startUp();
-
         });
         return willFocusSubscription;
 
@@ -99,10 +98,7 @@ export default function Home_Today({ navigation }) {
                         if (json.today.information === null && isConnected) {
                             navigation.navigate("Landing");
                         }
-                    })).catch(err => { console.log("Catched:", err); if (isConnected) { navigation.navigate("Landing") } }) // TODO: fix that it works wihtout restart
-
-
-
+                    })).catch(err => { console.log("Catched:", err); if (isConnected) { navigation.navigate("Landing") } }) 
         } catch (e) {
             console.warn("e:", e);
         }
@@ -119,8 +115,6 @@ export default function Home_Today({ navigation }) {
         }
     }
 
-    let load = true;
-
     const initialiseTiles = () => {
         try {
             if (isConnected || isConnected === null) {
@@ -131,7 +125,6 @@ export default function Home_Today({ navigation }) {
         } catch (err) {
             alert("Der Vertretungsplan konnte nicht geladen werden. Überprüfen Sie Ihre Netzwerkverbindung.");
         };
-        load = false;
     };
 
     let tiles_array_today;
@@ -143,7 +136,7 @@ export default function Home_Today({ navigation }) {
                 tiles_array_today.push(
                     <TouchableOpacity key={i + 1} onPress={() => {
                         // navigation.navigate("Information", { informations: _data[i], number: i });
-                        if (_data[i]["comments"] !== "") {alert("Bemerkung:", _data[i]["comments"] )}
+                        if (_data[i]["comments"] !== "") { alert("Bemerkung:", _data[i]["comments"]) }
                     }} >
                         <Tile
                             key={i + 1}
@@ -158,14 +151,15 @@ export default function Home_Today({ navigation }) {
                     </TouchableOpacity>
                 );
         };
-        if (tiles_array_today === undefined || tiles_array_today.length == 0) tiles_array_today.push(<Text key={1}>Keine Einträge unter diesem Filter.</Text>)
     }
 
     initialiseTiles();
 
     return (
         <View style={styles.container}>
-            <SafeAreaView style={{ paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 }}>
+            <StatusBar style="auto" />
+
+            <SafeAreaView style={{ paddingTop: Platform.OS === "android" ? 30 : 0 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'stretch' }} width={width}>
                     <View style={{ justifyContent: 'flex-start', alignItems: 'flex-start', marginLeft: 0, marginTop: 60, opacity: 0.8 }}>
                         <Icon style={{ justifyContent: 'flex-start', alignItems: 'flex-start' }} name='sync' onPress={() => setUpdate(update + 1)} color='gray' />
@@ -174,7 +168,7 @@ export default function Home_Today({ navigation }) {
                         <Icon style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }} name='settings' onPress={() => navigation.navigate("Settings")} />
                     </View>
                 </View>
-                <StatusBar style="auto" />
+
                 <View style={styles.wrapper}>
                     <View style={{ alignItems: 'center', justifyContent: 'space-evenly', flexDirection: 'row' }}>
                         <Text style={styles.header}>Vertretungsplan</Text>
@@ -183,11 +177,9 @@ export default function Home_Today({ navigation }) {
                         <Text style={styles.textDay}>{"Heute - "}{day}{","} {date}{":"}</Text>
                         <NewsTile text={news} style={styles.news} />
                         <ScrollView>
-                            {load ? <ActivityIndicator /> : tiles_array_today}
+                            {tiles_array_today.length === 0 ? <ActivityIndicator /> : tiles_array_today}
                         </ScrollView>
-
                     </View>
-
                 </View>
             </SafeAreaView>
         </View>

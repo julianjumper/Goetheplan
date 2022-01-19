@@ -129,6 +129,7 @@ const stylesSettings = StyleSheet.create({
     pickerWrapper: {
         alignItems: 'center',
         justifyContent: 'center',
+        width: width/3,
     },
     picker: {
         marginLeft: 50,
