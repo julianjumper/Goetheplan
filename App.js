@@ -6,7 +6,10 @@ import "react-native-gesture-handler";
 import Settings from './screens/settings';
 import Home_Today from './screens/home_today';
 import Home_Tomorrow from './screens/home_tomorrow';
+import landingScreen from './screens/landingScreen';
 import { createStackNavigator } from '@react-navigation/stack';
+import About from './screens/about'
+import Information from './screens/information'
 
 const Tab = createBottomTabNavigator();
 const stack = createStackNavigator();
@@ -32,6 +35,14 @@ export default function App() {
           headerShown: false,
         }} />
         <stack.Screen name='Settings' component={Settings} />
+        <stack.Screen name='Landing' component={landingScreen} options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }} />
+        <stack.Screen name='About' component={About} />
+        <stack.Screen name='Information' component={Information} options={{
+          title: "Mehr Informationen..."
+        }} />
       </stack.Navigator>
     </NavigationContainer>
   );

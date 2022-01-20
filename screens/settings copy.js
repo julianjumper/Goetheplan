@@ -1,27 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View, StatusBar, Picker, Button as But } from 'react-native';
-import { Input, Button } from 'react-native-elements';
-import { Icon } from 'react-native-elements';
-import { modalStyle, styles, stylesSettings } from '../style/styles';
+import { Alert, Modal, StyleSheet, Text, Pressable, View, TextInput, Button } from 'react-native';
+import { modalStyle, stylesSettings } from '../style/styles';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNPickerSelect from 'react-native-picker-select';
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { _url } from '../components/api';
-
-const url = _url;
 
 export default function Settings({ navigation }) {
 
     const [classes, setClasses] = useState('Klasse...');
     const [counter, setCounter] = useState(0);
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
 
     useEffect(() => {
         getSavedClass();
-        getSavedLogin();
     }, [counter])
 
     const getSavedClass = async () => {
@@ -35,31 +26,13 @@ export default function Settings({ navigation }) {
         }
     }
 
-    async function getSavedLogin() {
-        try {
-            const value_uname = await AsyncStorage.getItem('username');
-            const value_password = await AsyncStorage.getItem('password');
-
-            if (value_uname !== null) {
-                setUsername(() => value_uname);
-            } else { console.log("If nicht erfüllt"); return {} }
-
-            if (value_password !== null) {
-                setPassword(() => value_password);
-            } else { console.log("If nicht erfüllt"); return {} }
-
-        } catch (e) {
-            console.warn("e:", e);
-        }
-    }
-
-    function savePicker(value) {
+    function savePicker (value) {
         try {
             AsyncStorage.setItem('class', value);
         } catch (err) { console.warn("in savePicker - error when saving: ", err) }
     }
 
-    function savePassword_Username() {
+    function savePassword_Username (password, username) {
         try {
             AsyncStorage.setItem('password', password);
             AsyncStorage.setItem('username', username);
@@ -68,37 +41,12 @@ export default function Settings({ navigation }) {
 
     return (
         <View style={stylesSettings.container}>
-            <StatusBar style='light' />
             <View style={stylesSettings.headerWrapper}>
                 <Text style={stylesSettings.header}>Einstellungen</Text>
             </View>
             <View style={stylesSettings.headerWrapperWrapper}>
-                <View style={stylesSettings.headerWrapper2}>
-                    <Text style={stylesSettings.header2}>Anmeldedaten:</Text>
-                    <View style={stylesSettings.inputStyle}>
-                        <Input
-                            placeholder='Anmeldename'
-                            type='email'
-                            value={username}
-                            onChangeText={(text) => setUsername(text)}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                        />
-                        <Input
-                            placeholder='Passwort'
-                            secureTextEntry={true}
-                            type='password'
-                            value={password}
-                            onChangeText={(text) => setPassword(text)}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                        />
-                    </View>
-                    <Button style={stylesSettings.button} title="Login" onPress={() => savePassword_Username()} />
-                </View>
-                <View style={stylesSettings.classWrapper}>
-                    <Text style={stylesSettings.header2}>Wähle deine Klasse</Text>
-                    <Text style={stylesSettings.chooseClass}>(aktuell: {classes})</Text>
+                <View>
+                    <Text style={stylesSettings.header2}>Wähle deine Klasse (aktuell: {classes})</Text>
                 </View>
             </View>
             <View style={stylesSettings.pickerWrapper}>
@@ -112,32 +60,25 @@ export default function Settings({ navigation }) {
                         { label: '7b', value: '7b' },
                         { label: '7c', value: '7c' },
                         { label: '7d', value: '7d' },
-                        { label: '7e', value: '7e' },
                         { label: '8a', value: '8a' },
                         { label: '8b', value: '8b' },
                         { label: '8c', value: '8c' },
                         { label: '8d', value: '8d' },
-                        { label: '8e', value: '8e' },
                         { label: '9a', value: '9a' },
                         { label: '9b', value: '9b' },
                         { label: '9c', value: '9c' },
                         { label: '9d', value: '9d' },
-                        { label: '9e', value: '9e' },
                         { label: '10a', value: '10a' },
                         { label: '10b', value: '10b' },
                         { label: '10c', value: '10c' },
                         { label: '10d', value: '10d' },
-                        { label: '10e', value: '10e' },
                         { label: '11', value: '11' },
                         { label: '12', value: '12' },
                         { label: 'Team', value: 'Team' },
                     ]}
-                    pickerProps={{ style: { height: 214, overflow: 'hidden' } }}
                 />
-            </View>
-            <View style={stylesSettings.aboutPage} >
-                <But title={"Über"} onPress={() => navigation.navigate("About")} />
             </View>
         </View>
     )
 }
+

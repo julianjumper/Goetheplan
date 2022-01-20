@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View, StatusBar, Picker, Button as But } from 'react-native';
-import { Input, Button } from 'react-native-elements';
-import { Icon } from 'react-native-elements';
-import { modalStyle, styles, stylesSettings } from '../style/styles';
+import { Alert, Modal, StyleSheet, Text, Pressable, View, StatusBar, Picker, Image, Button as But } from 'react-native';
+import { Input, Button, Icon } from 'react-native-elements';
+import { modalStyle, styles, stylesLanding } from '../style/styles';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,7 +11,7 @@ import { _url } from '../components/api';
 
 const url = _url;
 
-export default function Settings({ navigation }) {
+export default function landingScreen({ navigation }) {
 
     const [classes, setClasses] = useState('Klasse...');
     const [counter, setCounter] = useState(0);
@@ -21,7 +20,7 @@ export default function Settings({ navigation }) {
 
     useEffect(() => {
         getSavedClass();
-        getSavedLogin();
+        // getSavedLogin();
     }, [counter])
 
     const getSavedClass = async () => {
@@ -67,15 +66,16 @@ export default function Settings({ navigation }) {
     }
 
     return (
-        <View style={stylesSettings.container}>
+        <View style={stylesLanding.container}>
             <StatusBar style='light' />
-            <View style={stylesSettings.headerWrapper}>
-                <Text style={stylesSettings.header}>Einstellungen</Text>
+            <View style={stylesLanding.headerWrapper}>
+                <Image source={require('../assets/favicon.png')} />
+                <Text style={stylesLanding.header}>Vertretungsplan</Text>
             </View>
-            <View style={stylesSettings.headerWrapperWrapper}>
-                <View style={stylesSettings.headerWrapper2}>
-                    <Text style={stylesSettings.header2}>Anmeldedaten:</Text>
-                    <View style={stylesSettings.inputStyle}>
+            <View style={stylesLanding.headerWrapperWrapper}>
+                <View style={stylesLanding.headerWrapper2}>
+                    <Text style={stylesLanding.header2}>Anmeldedaten:</Text>
+                    <View style={stylesLanding.inputStyle}>
                         <Input
                             placeholder='Anmeldename'
                             type='email'
@@ -94,17 +94,16 @@ export default function Settings({ navigation }) {
                             autoCorrect={false}
                         />
                     </View>
-                    <Button style={stylesSettings.button} title="Login" onPress={() => savePassword_Username()} />
+                    <Button style={stylesLanding.button} title="Login" onPress={() => { savePassword_Username(); navigation.navigate("Home"); }} />
                 </View>
-                <View style={stylesSettings.classWrapper}>
-                    <Text style={stylesSettings.header2}>Wähle deine Klasse</Text>
-                    <Text style={stylesSettings.chooseClass}>(aktuell: {classes})</Text>
+                <View>
+                    <Text style={stylesLanding.header2}>Wähle deine Klasse (aktuell: {classes})</Text>
                 </View>
             </View>
-            <View style={stylesSettings.pickerWrapper}>
+            <View style={stylesLanding.pickerWrapper}>
                 <RNPickerSelect
                     placeholder={{ label: 'Wähle Klasse...', value: '---' }}
-                    style={stylesSettings.picker}
+                    style={stylesLanding.picker}
                     onValueChange={(value) => { console.log(value); savePicker(value); setCounter(() => counter + 1) }}
                     items={[
                         { label: '---', value: '---' },
@@ -135,8 +134,8 @@ export default function Settings({ navigation }) {
                     pickerProps={{ style: { height: 214, overflow: 'hidden' } }}
                 />
             </View>
-            <View style={stylesSettings.aboutPage} >
-                <But title={"Über"} onPress={() => navigation.navigate("About")} />
+            <View style={stylesLanding.aboutPage} >
+                <Icon name='help' onPress={ () => navigation.navigate("About")} color='grey' />
             </View>
         </View>
     )
