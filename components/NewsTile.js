@@ -33,7 +33,14 @@ function getTilesSize(text) {
 
 function getText(text) {
     if (text.length === 0) { return "Keine Nachrichten."; }
-    else { return text }
+    else { 
+    
+        for (let everyNews = 0; everyNews < text.length; everyNews++) {
+            text[everyNews] = text[everyNews] + '\n\n'
+        }
+        return text 
+    
+    }
 }
 
 const NewsTile = (props) => {
