@@ -152,18 +152,17 @@ export default function Home_tomorrow({ navigation }) {
 
     return (
         <View style={styles.container}>
-            <SafeAreaView style={{ paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'stretch' }} width={width}>
-                    <View style={{ justifyContent: 'flex-start', alignItems: 'flex-start', marginLeft: 0, marginTop: 60, opacity: 0.8 }}>
-                        <Icon style={{ justifyContent: 'flex-start', alignItems: 'flex-start' }} name='sync' onPress={() => setUpdate(update + 1)} color='gray' />
-                    </View>
-                    <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', marginLeft: 0, marginTop: 60, opacity: 0.8 }}>
-                        <Icon style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }} name='settings' onPress={() => navigation.navigate("Settings")} />
-                    </View>
+            <StatusBar style="auto" />
+
+            <SafeAreaView style={{ paddingTop: Platform.OS === "android" ? 30 : 0 }}>
+
+                <View style={styles.icons}>
+                    <Icon name='sync' onPress={() => setUpdate(update + 1)} color='gray' />
+                    <Icon name='settings' onPress={() => navigation.navigate("Settings")} />
                 </View>
-                <StatusBar style="auto" />
                 <View style={styles.wrapper}>
-                    <View style={{ alignItems: 'center', justifyContent: 'space-evenly', flexDirection: 'row' }}>
+
+                    <View style={{ alignItems: 'center', justifyContent: 'space-around', flexDirection: 'row', alignItems: 'center', }}>
                         <Text style={styles.header}>Vertretungsplan</Text>
                     </View>
                     <View style={styles.scrollWrapper}>
@@ -172,9 +171,7 @@ export default function Home_tomorrow({ navigation }) {
                         <ScrollView>
                             {tiles_array_tomorrow.length === 0 ? <ActivityIndicator /> : tiles_array_tomorrow}
                         </ScrollView>
-
                     </View>
-
                 </View>
             </SafeAreaView>
         </View>

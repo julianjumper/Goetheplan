@@ -17,7 +17,7 @@ const { width, height } = Dimensions.get("window");
 
 export default function Home_Today({ navigation }) {
 
-    const url = _url 
+    const url = _url
 
     const [_value, setValue] = useState({});
     const isConnected = useInternetStatus();
@@ -98,7 +98,7 @@ export default function Home_Today({ navigation }) {
                         if (json.today.information === null && isConnected) {
                             navigation.navigate("Landing");
                         }
-                    })).catch(err => { console.log("Catched:", err); if (isConnected) { navigation.navigate("Landing") } }) 
+                    })).catch(err => { console.log("Catched:", err); if (isConnected) { navigation.navigate("Landing") } })
         } catch (e) {
             console.warn("e:", e);
         }
@@ -160,17 +160,14 @@ export default function Home_Today({ navigation }) {
             <StatusBar style="auto" />
 
             <SafeAreaView style={{ paddingTop: Platform.OS === "android" ? 30 : 0 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'stretch' }} width={width}>
-                    <View style={{ justifyContent: 'flex-start', alignItems: 'flex-start', marginLeft: 0, marginTop: 60, opacity: 0.8 }}>
-                        <Icon style={{ justifyContent: 'flex-start', alignItems: 'flex-start' }} name='sync' onPress={() => setUpdate(update + 1)} color='gray' />
-                    </View>
-                    <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', marginLeft: 0, marginTop: 60, opacity: 0.8 }}>
-                        <Icon style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }} name='settings' onPress={() => navigation.navigate("Settings")} />
-                    </View>
-                </View>
 
+                <View style={styles.icons}>
+                    <Icon name='sync' onPress={() => setUpdate(update + 1)} color='gray' />
+                    <Icon name='settings' onPress={() => navigation.navigate("Settings")} />
+                </View>
                 <View style={styles.wrapper}>
-                    <View style={{ alignItems: 'center', justifyContent: 'space-evenly', flexDirection: 'row' }}>
+
+                    <View>
                         <Text style={styles.header}>Vertretungsplan</Text>
                     </View>
                     <View style={styles.scrollWrapper}>
@@ -185,3 +182,14 @@ export default function Home_Today({ navigation }) {
         </View>
     );
 }
+
+/*
+<View style={{ flexDirection: 'row', alignItems: 'stretch' }} width={width}>
+                    <View style={{ justifyContent: 'flex-start', alignItems: 'flex-start', marginLeft: 0, marginTop: 60, opacity: 0.8 }}>
+                        <Icon style={{ justifyContent: 'flex-start', alignItems: 'flex-start' }} name='sync' onPress={() => setUpdate(update + 1)} color='gray' />
+                    </View>
+                    <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', marginLeft: 0, marginTop: 60, opacity: 0.8 }}>
+                        <Icon style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }} name='settings' onPress={() => navigation.navigate("Settings")} />
+                    </View>
+                </View>
+*/

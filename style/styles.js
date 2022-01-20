@@ -6,29 +6,36 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
+        //  alignItems: 'center',
+        //  justifyContent: 'center',
     },
     header: {
         fontWeight: "bold",
         fontSize: 30,
     },
     wrapper: {
-        marginTop: 20,
+        marginTop: 30,
         alignItems: 'center',
-        justifyContent: 'center',
+        // justifyContent: 'center',
     },
     scrollWrapper: {
         marginTop: 20,
-        marginBottom: 180,
+        marginBottom: height / 7.9,
+        //alignItems: 'center',
     },
     textDay: {
         fontWeight: 'bold',
-        marginTop: 10,
+        marginTop: height / 100,
         marginBottom: 5,
     },
     news: {
         marginRight: (width / 5)
+    },
+    icons: {
+        position: 'absolute',
+        left: width - 60,
+        top: height / 15,
+        flexDirection: 'row',
     },
 });
 
@@ -129,7 +136,14 @@ const stylesSettings = StyleSheet.create({
     pickerWrapper: {
         alignItems: 'center',
         justifyContent: 'center',
-        width: width/3,
+        width: width / 3,
+        marginTop: 5,
+        borderWidth: 0.5,
+        borderColor: 'black',
+        borderRadius: 10,
+        color: 'black',
+        paddingVertical: 12,
+        paddingHorizontal: 10,
     },
     picker: {
         marginLeft: 50,
@@ -142,7 +156,7 @@ const stylesSettings = StyleSheet.create({
     },
     aboutPage: {
         position: 'absolute',
-        bottom: height/20,
+        bottom: height / 20,
     },
 });
 
@@ -183,6 +197,13 @@ const stylesLanding = StyleSheet.create({
     pickerWrapper: {
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop: 5,
+        borderWidth: 0.5,
+        borderColor: 'black',
+        borderRadius: 10,
+        color: 'black',
+        paddingVertical: 12,
+        paddingHorizontal: 10,
     },
     picker: {
         marginLeft: 50,
@@ -195,8 +216,8 @@ const stylesLanding = StyleSheet.create({
     },
     aboutPage: {
         position: 'absolute',
-        top: height/10,
-        right: width /10
+        top: height / 10,
+        right: width / 10
     },
 });
 
@@ -213,25 +234,25 @@ const stylesAbout = StyleSheet.create({
         fontSize: 30,
     },
     headerWrapper: {
-        marginTop: height/100,
+        marginTop: height / 100,
         alignItems: 'center',
         justifyContent: 'center',
     },
     textBody: {
-        marginHorizontal: width/15,
+        marginHorizontal: width / 15,
     },
     bodyText: {
-     //   textAlign: 'justify',
+        //   textAlign: 'justify',
     },
     footer: {
         position: 'absolute',
-        bottom: height/20,
+        bottom: height / 20,
     },
     footerText: {
         color: 'rgb(168,168,168)',
     },
     scroller: {
-        marginBottom: height/6,
+        marginBottom: height / 6,
     }
 });
 
