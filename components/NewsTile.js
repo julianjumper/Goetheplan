@@ -9,7 +9,7 @@ const { width, height } = Dimensions.get("window");
 const calcTileDimensions = (deviceWidth, deviceHeight, tpr) => {
     const padding = 10
     const height = 80 // (deviceHeight / 14)
-    const width = (deviceWidth / 1.34)
+    const width = (deviceWidth / 1.2)
     return { width, height, padding };
 };
 
@@ -33,13 +33,13 @@ function getTilesSize(text) {
 
 function getText(text) {
     if (text.length === 0) { return "Keine Nachrichten."; }
-    else { 
-    
-        for (let everyNews = 0; everyNews < text.length; everyNews++) {
-            text[everyNews] = text[everyNews] + '\n\n'
+    else {
+
+        for (let everyNews = 0; everyNews < text.length - 1; everyNews++) {
+            text[everyNews] = text[everyNews] + '\n'
         }
-        return text 
-    
+        return text
+
     }
 }
 
@@ -63,4 +63,3 @@ const NewsTile = (props) => {
 }
 
 export default NewsTile
-

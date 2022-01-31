@@ -12,54 +12,28 @@ const baseUrl = 'http://localhost:8080';
 const _url = 'http://xh41egfbstut8yca.myfritz.net:8080' // Johannes Pi 🥳 
 const url = `${baseUrl}/timetables?username=311441&password=schuleisttoll`;
 
-const fetchData_today = () => {
-    const [data, setData] = useState([]);
 
-    useEffect(() => {
-        fetch(url)
-            .then((res) => res.json())
-            .then((json) => {
-                setData(json.today.information);
-                const jsonData = JSON.stringify(data);
+
+function fetchEverything(day, uname, password) {
+    if (uname === "" || password === "") return;
+    fetch(`${_url}/timetables?username=${uname}&password=${password}`)
+        .then(data => data.json()
+            .then(json => { // .then( () => {} )
+                // console.log("json:", json.today.day);
+                //console.log("json:", json[day]["information"]);
+                const information = json[day]["information"];
+                const apiInfo = JSON.stringify(information);
+                const apiDay = JSON.stringify(json[day]["day"]);
+                const apiDate = JSON.stringify(json[day]["date"]);
+                const apiNews = JSON.stringify(json[day]["news"]);
                 try {
-                    AsyncStorage.setItem('@storage_Key', jsonData);
+                    AsyncStorage.setItem(`${day}_info`, apiInfo);
+                    AsyncStorage.setItem(`${day}_day`, apiDay);
+                    AsyncStorage.setItem(`${day}_date`, apiDate);
+                    AsyncStorage.setItem(`${day}_news`, apiNews);
                 } catch (err) { console.warn("in asycn set: ", err) }
-
-            })
-            .catch((err) => { 
-                console.warn("API gecatcht. Vermutlich kein Internet."); 
-                alert("1"); 
-            });
-    }, []);
-
-    return data;
-};
-
-const fetchData_tomorrow = () => {
-    const [data, setData] = useState([]);
-
-    useEffect(() => {
-        fetch(url)
-            .then((res) => res.json())
-            .then((json) => {
-                setData(json.tomorrow.information);
-                const jsonData = JSON.stringify(data);
-                try {
-                    AsyncStorage.setItem('@storage_Key_tomorrow', jsonData);
-                } catch (err) { console.warn("in asycn set: ", err) }
-
-            })
-            .catch((err) => { 
-                console.warn("API gecatcht. Vermutlich kein Internet."); 
-                alert("1"); 
-            });
-    }, []);
-
-    return data;
-};
+            })).catch(err => { console.log("Catched in fetchEverything:", err); }) // TODO: fix that it works wihtout restart    navigation.navigate("Landing")
+}
 
 
-const plan = require("./plan.json");
-
-
-export { fetchData_today, fetchData_tomorrow, plan, baseUrl, _url };
+export { baseUrl, _url, fetchEverything };

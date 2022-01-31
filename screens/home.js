@@ -10,14 +10,15 @@ import NetInfo from "@react-native-community/netinfo";
 import NewsTile from '../components/NewsTile';
 import { useInternetStatus } from '../components/internetStatus';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { _url } from '../components/api';
-// import SafeViewAndroid from '../components/SafeViewAndroid';
+import { _url, fetchEverything } from '../components/api';
 
 const { width, height } = Dimensions.get("window");
 
-export default function Home_Today({ navigation }) {
+export default function Home({ route, navigation }) {
 
     const url = _url
+    // const DAY = "today";
+    const DAY = route.params.day;
 
     const [_value, setValue] = useState({});
     const isConnected = useInternetStatus();
@@ -42,40 +43,38 @@ export default function Home_Today({ navigation }) {
         });
         return willFocusSubscription;
 
-    }, [update, password, uname, isConnected, isModal]);
+    }, [update, password, uname, isConnected]);
 
     function startUp() {
         getSavedLogin();
         if (uname === "" && password === "") return;
-        fetchEverything();
+        fetchEverything(DAY, uname, password);
         getData();
         getSavedClass();
         initialiseTiles();
     }
 
-    function fetchEverything() {
-        fetch(`${url}/timetables?username=${uname}&password=${password}`)
-            .then(data => data.json()
-                .then(json => { // .then( () => {} )
-                    setApiData(json.today.information);
-                    setDay(json.today.day);
-                    setDate(json.today.date);
-                    setNews(json.today.news);
-                    const jsonData = JSON.stringify(json.today.information);
-                    try {
-                        AsyncStorage.setItem('@storage_Key', jsonData);
-                    } catch (err) { console.warn("in asycn set: ", err) }
-                })).catch(err => { console.log("Catched in fetchEverything:", err); }) // TODO: fix that it works wihtout restart    navigation.navigate("Landing")
-    }
-
     const getData = async () => {
         try {
-            const value = await AsyncStorage.getItem('@storage_Key');
-            if ((value !== null && typeof value !== 'undefined')) {
-                setValue(() => JSON.parse(value));
-            } else { return {} }
+            const _information = await AsyncStorage.getItem(`${DAY}_info`);
+            const _day = await AsyncStorage.getItem(`${DAY}_day`);
+            const _date = await AsyncStorage.getItem(`${DAY}_date`);
+            const _news = await AsyncStorage.getItem(`${DAY}_news`);
+
+            if (_information !== null && typeof _information !== 'undefined') {
+                setValue(() => JSON.parse(_information));
+            }
+            if (_day !== null && typeof _day !== 'undefined') {
+                setDay(() => JSON.parse(_day));
+            }
+            if (_date !== null && typeof _date !== 'undefined') {
+                setDate(() => JSON.parse(_date));
+            }
+            if (_news !== null && typeof _news !== 'undefined') {
+                setNews(() => JSON.parse(_news));
+            }
         } catch (e) {
-            console.warn("e:", e);
+            console.warn("in getData:", e);
         }
     }
 
@@ -95,12 +94,12 @@ export default function Home_Today({ navigation }) {
             fetch(`${url}/timetables?username=${value_uname}&password=${value_password}`)
                 .then(data => data.json()
                     .then(json => { // .then( () => {} )
-                        if (json.today.information === null && isConnected) {
+                        if (json[DAY]["information"] === null && isConnected) {
                             navigation.navigate("Landing");
                         }
                     })).catch(err => { console.log("Catched:", err); if (isConnected) { navigation.navigate("Landing") } })
         } catch (e) {
-            console.warn("e:", e);
+            console.warn("ein getSavedLogin, line 81", e);
         }
     }
 
@@ -117,23 +116,19 @@ export default function Home_Today({ navigation }) {
 
     const initialiseTiles = () => {
         try {
-            if (isConnected || isConnected === null) {
-                createTiles(apiData);
-            } else {
-                createTiles(_value);
-            }
+            createTiles(_value);
         } catch (err) {
             alert("Der Vertretungsplan konnte nicht geladen werden. Überprüfen Sie Ihre Netzwerkverbindung.");
         };
     };
 
-    let tiles_array_today;
+    let tiles_array;
 
     const createTiles = (_data) => {
-        tiles_array_today = [];
+        tiles_array = [];
         for (let i = 0; i < _data.length; i++) {
-            if (_data[i]["classes"] === classes || classes === '---')
-                tiles_array_today.push(
+            if (_data[i]["classes"].includes(classes) || classes === '---')
+                tiles_array.push(
                     <TouchableOpacity key={i + 1} onPress={() => {
                         // navigation.navigate("Information", { informations: _data[i], number: i });
                         if (_data[i]["comments"] !== "") { alert("Bemerkung:", _data[i]["comments"]) }
@@ -171,10 +166,10 @@ export default function Home_Today({ navigation }) {
                         <Text style={styles.header}>Vertretungsplan</Text>
                     </View>
                     <View style={styles.scrollWrapper}>
-                        <Text style={styles.textDay}>{"Heute - "}{day}{","} {date}{":"}</Text>
+                        {DAY === "today" ? <Text style={styles.textDay}>{"Heute - "}{day}{","} {date}{":"}</Text> : <Text style={styles.textDay}>{"Morgen - "}{day}{","} {date}{":"}</Text>}
                         <NewsTile text={news} style={styles.news} />
                         <ScrollView>
-                            {tiles_array_today.length === 0 ? <ActivityIndicator /> : tiles_array_today}
+                            {tiles_array.length === 0 ? <ActivityIndicator color="gray" /> : tiles_array}
                         </ScrollView>
                     </View>
                 </View>
@@ -182,14 +177,3 @@ export default function Home_Today({ navigation }) {
         </View>
     );
 }
-
-/*
-<View style={{ flexDirection: 'row', alignItems: 'stretch' }} width={width}>
-                    <View style={{ justifyContent: 'flex-start', alignItems: 'flex-start', marginLeft: 0, marginTop: 60, opacity: 0.8 }}>
-                        <Icon style={{ justifyContent: 'flex-start', alignItems: 'flex-start' }} name='sync' onPress={() => setUpdate(update + 1)} color='gray' />
-                    </View>
-                    <View style={{ justifyContent: 'flex-end', alignItems: 'flex-end', marginLeft: 0, marginTop: 60, opacity: 0.8 }}>
-                        <Icon style={{ justifyContent: 'flex-end', alignItems: 'flex-end' }} name='settings' onPress={() => navigation.navigate("Settings")} />
-                    </View>
-                </View>
-*/
