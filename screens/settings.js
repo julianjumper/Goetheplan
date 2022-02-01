@@ -14,15 +14,19 @@ const url = _url;
 
 export default function Settings({ navigation }) {
 
-    const [classes, setClasses] = useState('Klasse...');
+    const [classes, setClasses] = useState();
     const [counter, setCounter] = useState(0);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
+
     useEffect(() => {
-        getSavedClass();
+        navigation.setOptions({ headerRight: () => <View style={{ marginRight: 10 }}><Icon name="check-circle" color="#32cd32" onPress={() => { savePicker(classes); navigation.pop(); Alert.alert("Übernommen", "Änderungen wurden übernommen.") }} /></View> });
+
+        if(classes === undefined || classes === null) 
+            getSavedClass();
         getSavedLogin();
-    }, [counter])
+    }, [counter, classes])
 
     const getSavedClass = async () => {
         try {
@@ -57,6 +61,10 @@ export default function Settings({ navigation }) {
         try {
             AsyncStorage.setItem('class', value);
         } catch (err) { console.warn("in savePicker - error when saving: ", err) }
+    }
+
+    function setPicker(value) {
+        setClasses(() => value)
     }
 
     function savePassword_Username() {
@@ -103,9 +111,9 @@ export default function Settings({ navigation }) {
             </View>
             <View style={stylesSettings.pickerWrapper}>
                 <RNPickerSelect
-                    placeholder={{ label: 'Wähle Klasse...', value: '---' }}
+                    placeholder={{ label: 'Wähle Klasse...', value: classes }}
                     style={stylesSettings.picker}
-                    onValueChange={(value) => { console.log(value); savePicker(value); setCounter(() => counter + 1) }}
+                    onValueChange={(value) => { console.log(classes); setPicker(value); setCounter(() => counter + 1) }}
                     items={[
                         { label: '---', value: '---' },
                         { label: '7a', value: '7a' },
