@@ -10,6 +10,8 @@ import RNPickerSelect from 'react-native-picker-select';
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { _url } from '../components/api';
 
+// Letzter Button (Logout-Button) sollte eventuell entfernt werden. Oder auch nicht , mal schauen.
+
 const url = _url;
 
 export default function Settings({ navigation }) {
@@ -21,7 +23,7 @@ export default function Settings({ navigation }) {
 
 
     useEffect(() => {
-        navigation.setOptions({ headerRight: () => <View style={{ marginRight: 10 }}><Icon name="check-circle" color="#32cd32" onPress={() => { savePicker(classes); navigation.pop(); Alert.alert("Übernommen", "Änderungen wurden übernommen.") }} /></View> });
+        navigation.setOptions({ headerRight: () => <View style={{ marginRight: 15 }}><Icon name="check-circle" color="#32cd32" onPress={() => { savePicker(classes); navigation.pop(); Alert.alert("Übernommen", "Änderungen wurden übernommen.") }} /></View> });
 
         if(classes === undefined || classes === null) 
             getSavedClass();
@@ -145,6 +147,7 @@ export default function Settings({ navigation }) {
             </View>
             <View style={stylesSettings.aboutPage} >
                 <But title={"Über"} onPress={() => navigation.navigate("About")} />
+                <But title={"log out"} onPress={() => navigation.navigate("Landing")} />  
             </View>
         </View>
     )

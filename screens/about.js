@@ -24,19 +24,18 @@ const About = () => {
                         damit nicht auch ihr das gleiche Leiden durchleben müsst, wie wir es tagtäglich taten.
                         {'\n'}
                         Die App brachte viele Herausforderungen mit sich; daher teilten wir uns auf: {"\n"}
-                        Fredrik entwickelte die nötige Programmierschnittstelle, die alle nötigen Informationen aus dem originalen Vertretungsplan ausließt. Er kümmerte sich also um das Backend. Also darum, dass alle wichtigen Informationen zur Verfügung stehen und dann in der App angezeigt werden können. 
+                        Fredrik entwickelte die nötige Programmierschnittstelle, die alle nötigen Informationen aus dem originalen Vertretungsplan ausließt. Er kümmerte sich also um das sogenannte "Backend" - also darum, dass alle wichtigen Informationen zur Verfügung stehen und dann in der App angezeigt werden können. 
                         {'\n'}
 
-                        Die App selbst - das Frontend, also das was ihr benutzen könnt und auf eurem Handy installiert habt - wurde dann von Julian entwickelt. Die App liest die von Fredrik bearbeiteten Daten ein und präsentiert diese dann.
+                        Die App selbst - das sogenannte "Frontend", also das was ihr benutzen könnt und auf eurem Handy installiert habt - wurde dann von Julian entwickelt. Die App liest die von Fredrik bearbeiteten Daten ein und präsentiert diese dann.
                         {'\n'}
                         Fredrik und Julian waren bis Abitur 2022 Schüler des Goethe-Gymnasiums.
                         {'\n'}
                         {'\n'}
 
-                        <B>Wichtig:</B> Diese App fungiert als eine Art "Reader" der für DSB-Mobile® gespeicherten Daten. Auf diesen Daten besteht kein Urheberrecht, da sie für jeden Nutzer frei einsehbar sind.
-                        {'\n'}
 
-                        <B>Danke an alle Beteiligten</B> für die Untersützung. Insbesondere Gordana Skoric-Knabe (Unterstützung bürokratischer Seite; die Kommunikation mit den IT-Unternehmen tut sich nicht jeder freiwillig an...), Johannes Foltin (Schüler unseres Jahrgangs; Verfügungstellung eines Servers für Testzwecke) und nicht zuletzt die Schulleitung Eva Frederichs. Wer hätte jemals erwarten können, dass eine deutsche Schule, so digital fähig sein kann.😘
+
+                        <B>Danke an alle Beteiligten</B> für die Untersützung. Insbesondere Gordana Skoric-Knabe (Unterstützung bürokratischer Seite; die Kommunikation mit den IT-Unternehmen tut sich nicht jeder freiwillig an...), Johannes Foltin (Schüler unseres Jahrgangs; Verfügungstellung eines Servers für Testzwecke) und nicht zuletzt die Schulleitung Eva Frederichs. Wer hätte jemals erwarten können, dass eine deutsche Schule, so digital fähig sein kann.❤️
 
                         {'\n'}
                         {'\n'}{'\n'}{'\n'}
@@ -44,6 +43,9 @@ const About = () => {
                         <B>Datenschutzerklärung gemäß §13, TMG</B>
                         {'\n'}
                         Bei der gesamten Nutzung der 'GoehteVertretungsplan'-Anwendung werden zu keinem Zeitpunkt etwaige personenbezogene Daten erhoben.
+                        {'\n'}
+                       
+                        <B>Wichtig:</B> Auf keinerlei Daten besteht ein etwaiges Urheberrecht, da sie für jeden Nutzer frei einsehbar sind. Das gilt insbesondere auf die durch die API gewonnenen Daten.
 
                         {'\n'}{'\n'}
 

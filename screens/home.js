@@ -155,7 +155,7 @@ export default function Home({ route, navigation }) {
                 <View
                     key={1}
                     style={{ alignItems: "center" }}>
-                    <Text key={1}>Keine Einträge für diese Klasse gefunden.</Text>
+                    <Text key={1}>Keine Einträge für diese Klasse gefunden😓</Text>
                 </View> // jaja i know, das mit den unique keys übe ich lieber noch mal.
             );
     }

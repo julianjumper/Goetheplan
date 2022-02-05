@@ -198,6 +198,8 @@ const stylesLanding = StyleSheet.create({
     pickerWrapper: {
         alignItems: 'center',
         justifyContent: 'center',
+        width: width / 3,
+        height: height / 20,
         marginTop: 5,
         borderWidth: 0.5,
         borderColor: 'black',
