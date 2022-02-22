@@ -1,18 +1,11 @@
 // This class gets the JSON of the DSBMobile API from github.com/cyborck/DSBmobileAPI
-// Well, not at that second: A dummy object is  initialized as 'plan'.
-import React, { useState, useEffect } from 'react';
-import { Text, ActivityIndicator, View, FlatList } from 'react-native';
-import { checkConnection } from './checkInternet';
-import DefaultPreference from 'react-native-default-preference';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const baseUrl = 'http://localhost:8080';
 // const _url = 'http://localhost:8080'; // localhost 🏠
 // const _url = 'http://192.168.178.23:8080' // Julians Mac 💻
-const _url = 'http://xh41egfbstut8yca.myfritz.net:8080' // Johannes Pi 🥳 
-const url = `${baseUrl}/timetables?username=311441&password=schuleisttoll`;
-
-
+const _url = 'http://xh41egfbstut8yca.myfritz.net:8080' // Johannes Pi 🍓
 
 function fetchEverything(day, uname, password) {
     if (uname === "" || password === "") return;
@@ -34,6 +27,5 @@ function fetchEverything(day, uname, password) {
                 } catch (err) { console.warn("in asycn set: ", err) }
             })).catch(err => { console.log("Catched in fetchEverything:", err); }) // TODO: fix that it works wihtout restart    navigation.navigate("Landing")
 }
-
 
 export { baseUrl, _url, fetchEverything };

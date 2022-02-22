@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Dimensions } from 'react-native';
+import { Dimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import "react-native-gesture-handler";
@@ -48,17 +48,24 @@ export default function App() {
   );
 }
 
+function getTabMargin() {
+  if (Platform.OS === "ios") return 15;
+  else 0;
+}
+
 const stackNav = () => {
 
   return (
+
     <Tab.Navigator screenOptions={{
       tabBarLabelPosition: "beside-icon",
       tabBarLabelStyle: {
         fontWeight: "700",
-        fontSize: 15
+        fontSize: 15,
+        marginBottom: getTabMargin(),
       },
       tabBarIconStyle: { display: "none" },
-      activeTintColor: "orange" // relevent für Top Tab Navigator
+      activeTintColor: "orange", // relevent für Top Tab Navigator
     }}
       tabBarPosition="bottom" // relevent für Top Tab Navigator
       options={{ headerShown: false }}
@@ -66,14 +73,14 @@ const stackNav = () => {
       <Tab.Screen
         name='Heute'
         component={Home}
-        initialParams={{day: "today"}}
+        initialParams={{ day: "today" }}
         options={{
           headerShown: false,
         }} />
       <Tab.Screen
         name="Morgen"
         component={Home}
-        initialParams={{day: "tomorrow"}}
+        initialParams={{ day: "tomorrow" }}
         options={{
           headerShown: false,
         }} />

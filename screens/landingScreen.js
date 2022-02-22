@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Alert, Modal, StyleSheet, Text, Pressable, View, StatusBar, Picker, Image, Button as But } from 'react-native';
+import { Alert, Modal, StyleSheet, Text, Pressable, View, StatusBar, Image, Button as But } from 'react-native';
 import { Input, Button, Icon } from 'react-native-elements';
 import { modalStyle, styles, stylesLanding } from '../style/styles';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import RNPickerSelect from 'react-native-picker-select';
+import { useInternetStatus } from '../components/internetStatus';
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { _url } from '../components/api';
 
@@ -17,6 +18,7 @@ export default function landingScreen({ navigation }) {
     const [counter, setCounter] = useState(0);
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const isConnected = useInternetStatus();
 
     useEffect(() => {
         getSavedClass();
@@ -65,6 +67,15 @@ export default function landingScreen({ navigation }) {
         } catch (err) { console.warn("in savePass... - error when saving: ", err) }
     }
 
+    function navigate() {
+        if (isConnected) {
+            savePassword_Username();
+            navigation.navigate("Home");
+        }
+        else
+            Alert.alert("Keine Internetverbindung", "Bitte überprüfe deine Internetverbindnug.")
+    }
+
     return (
         <View style={stylesLanding.container}>
             <StatusBar style='light' />
@@ -94,7 +105,7 @@ export default function landingScreen({ navigation }) {
                             autoCorrect={false}
                         />
                     </View>
-                    <Button style={stylesLanding.button} title="Login" onPress={() => { savePassword_Username(); navigation.navigate("Home"); }} />
+                    <Button style={stylesLanding.button} title="Login" onPress={() => { navigate() }} />
                 </View>
                 <View>
                     <Text style={stylesLanding.header2}>Wähle deine Klasse (aktuell: {classes})</Text>
@@ -135,7 +146,7 @@ export default function landingScreen({ navigation }) {
                 />
             </View>
             <View style={stylesLanding.aboutPage} >
-                <Icon name='help' onPress={ () => navigation.navigate("About")} color='grey' />
+                <Icon name='help' onPress={() => navigation.navigate("About")} color='grey' />
             </View>
         </View>
     )

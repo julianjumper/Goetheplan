@@ -1,6 +1,6 @@
 import { setStatusBarTranslucent, StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect, useCallback } from 'react';
-import { Text, View, ScrollView, SafeAreaView, ActivityIndicator, Dimensions } from 'react-native';
+import { Text, View, ScrollView, SafeAreaView, ActivityIndicator, Dimensions, Alert, RefreshControl } from 'react-native';
 import { styles } from '../style/styles';
 import Tile from '../components/tile';
 import { Icon } from 'react-native-elements';
@@ -34,6 +34,9 @@ export default function Home({ route, navigation }) {
     const [news, setNews] = useState("Keine Nachrichten.");
     const [uname, setUname] = useState("");
     const [password, setPassword] = useState("");
+
+    const [refreshing, setRefreshing] = useState(false);
+
 
     useEffect(() => {
         startUp();
@@ -123,6 +126,7 @@ export default function Home({ route, navigation }) {
     };
 
     let tiles_array;
+    let tiles_length;
 
     const createTiles = (_data) => {
         tiles_array = [];
@@ -131,7 +135,7 @@ export default function Home({ route, navigation }) {
                 tiles_array.push(
                     <TouchableOpacity key={i + 1} onPress={() => {
                         // navigation.navigate("Information", { informations: _data[i], number: i });
-                        if (_data[i]["comments"] !== "") { alert("Bemerkung:", _data[i]["comments"]) }
+                        if (_data[i]["comments"] !== "") { Alert.alert("Bemerkung", _data[i]["comments"]) }
                     }} >
                         <Tile
                             key={i + 1}
@@ -146,6 +150,14 @@ export default function Home({ route, navigation }) {
                     </TouchableOpacity>
                 );
         };
+        if ((_data !== null || _data !== undefined) && _data.length > 0 && tiles_array.length === 0)
+            tiles_array.push(
+                <View
+                    key={1}
+                    style={{ alignItems: "center" }}>
+                    <Text key={1}>Keine Einträge für diese Klasse gefunden😓</Text>
+                </View> // jaja i know, das mit den unique keys übe ich lieber noch mal.
+            );
     }
 
     initialiseTiles();
@@ -157,7 +169,6 @@ export default function Home({ route, navigation }) {
             <SafeAreaView style={{ paddingTop: Platform.OS === "android" ? 30 : 0 }}>
 
                 <View style={styles.icons}>
-                    <Icon name='sync' onPress={() => setUpdate(update + 1)} color='gray' />
                     <Icon name='settings' onPress={() => navigation.navigate("Settings")} />
                 </View>
                 <View style={styles.wrapper}>
@@ -168,12 +179,13 @@ export default function Home({ route, navigation }) {
                     <View style={styles.scrollWrapper}>
                         {DAY === "today" ? <Text style={styles.textDay}>{"Heute - "}{day}{","} {date}{":"}</Text> : <Text style={styles.textDay}>{"Morgen - "}{day}{","} {date}{":"}</Text>}
                         <NewsTile text={news} style={styles.news} />
-                        <ScrollView>
-                            {tiles_array.length === 0 ? <ActivityIndicator color="gray" /> : tiles_array}
-                        </ScrollView>
-                    </View>
+                        <ScrollView refreshControl={<RefreshControl tintColor="gray" refreshing={refreshing} onRefresh={() => setUpdate(update + 1)} />}>
+                        {tiles_array.length === 0 ? <ActivityIndicator color="gray" /> : tiles_array}
+                    </ScrollView>
                 </View>
-            </SafeAreaView>
         </View>
+            </SafeAreaView >
+        </View >
     );
 }
+// () => {setUpdate(update + 1);
