@@ -6,7 +6,6 @@ const baseUrl = 'http://localhost:8080';
 // const _url = 'http://localhost:8080'; // localhost 🏠
 // const _url = 'http://192.168.178.23:8080' // Julians Mac 💻
 const _url = 'http://xh41egfbstut8yca.myfritz.net:8080' // Johannes Pi 🍓
-const url = `${baseUrl}/timetables?username=311441&password=schuleisttoll`;
 
 function fetchEverything(day, uname, password) {
     if (uname === "" || password === "") return;
