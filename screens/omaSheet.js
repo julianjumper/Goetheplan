@@ -21,11 +21,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const OmaScreen = (props) => (
+const OmaScreen = ({navigation, route}) => (
 <View style = {styles.BigContainer}>
 <View style = {styles.Container}>
     <Text style={styles.header}>Klasse</Text>
-    <Text style={styles.header}>{props.class}</Text>
+    <Text style={styles.header}>{route.params.class}</Text>
 </View>
 </View>
 
