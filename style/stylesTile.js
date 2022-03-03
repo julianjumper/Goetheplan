@@ -39,7 +39,7 @@ const stylesTile = StyleSheet.create({
     fontWeight: "bold",
   },
   centerSectionTextSecond: {
-    fontWeight: "100",
+    fontWeight: "400",
   },
   rightSection: {
     justifyContent: "center",
