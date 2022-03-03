@@ -3,6 +3,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Text, View, ScrollView, SafeAreaView, ActivityIndicator, Dimensions, Alert, RefreshControl } from 'react-native';
 import { styles } from '../style/styles';
 import Tile from '../components/tile';
+import Tile_ from '../components/nicesTile';
 import { Icon } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNetInfo } from "@react-native-community/netinfo";
@@ -137,7 +138,7 @@ export default function Home({ route, navigation }) {
                         // navigation.navigate("Information", { informations: _data[i], number: i });
                         if (_data[i]["comments"] !== "") { Alert.alert("Bemerkung", _data[i]["comments"]) }
                     }} >
-                        <Tile
+                        <Tile_
                             key={i + 1}
                             text={_data[i]["absent"]}
                             lessons={_data[i]["lessons"]}
@@ -146,6 +147,7 @@ export default function Home({ route, navigation }) {
                             comment={_data[i]["comments"]}
                             class={_data[i]["classes"]}
                             subject={_data[i]["subject"]}
+                            navigation={navigation}
                         />
                     </TouchableOpacity>
                 );

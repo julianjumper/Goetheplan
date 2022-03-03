@@ -10,6 +10,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import About from './screens/about'
 import Information from './screens/information'
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import OmaScreen from './screens/omaSheet';
 
 const { width, height } = Dimensions.get("window");
 
@@ -40,6 +41,9 @@ export default function App() {
           gestureEnabled: false,
         }} />
         <stack.Screen name='About' component={About} />
+        <stack.Screen name='OmaScreen' component={OmaScreen} options={{
+          headerShown: false,
+        }} />
         <stack.Screen name='Information' component={Information} options={{
           title: "Mehr Informationen..."
         }} />

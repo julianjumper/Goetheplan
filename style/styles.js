@@ -313,5 +313,4 @@ const largeTileStyle = StyleSheet.create({
 });
 
 
-
 export { styles, itemStyle, stylesSettings, newsStyle, stylesLanding, stylesAbout };

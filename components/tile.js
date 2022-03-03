@@ -137,7 +137,7 @@ const Item = ({ width, height, padding, text, lessons, kind, kind_text_size, roo
         </View>
         <View style={{ justifyContent: "center" }}>
             <View style={itemStyle.kindContainer}>
-                <Text style={[itemStyle.kindText], { fontSize: kind_text_size, fontWeight: 'bold', }}>{kind}</Text>
+                <Text style={[itemStyle.kindText, { fontSize: kind_text_size, fontWeight: 'bold', }]}>{kind}</Text>
             </View>
         </View>
     </View>
