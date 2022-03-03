@@ -140,14 +140,15 @@ export default function Home({ route, navigation }) {
                     }} >
                         <Tile_
                             key={i + 1}
-                            text={_data[i]["absent"]}
-                            lessons={_data[i]["lessons"]}
-                            kind={_data[i]["type"]}
-                            room={_data[i]["newRoom"]}
-                            comment={_data[i]["comments"]}
-                            class={_data[i]["classes"]}
-                            subject={_data[i]["subject"]}
-                            navigation={navigation}
+                            text={_data[i]["absent"]}           // Abwesender Lehrer
+                            lessons={_data[i]["lessons"]}       // Stunde (zeitlich)
+                            kind={_data[i]["type"]}             // Art des Eintrags
+                            room={_data[i]["newRoom"]}          // neuer Raum
+                            comment={_data[i]["comments"]}      // Bemerkung
+                            class={_data[i]["classes"]}         // Jahrgang / Klasse
+                            subject={_data[i]["subject"]}       // Fach
+                            replacement={_data[i]["replacement"]} // Vertretung 
+                            navigation={navigation} 
                         />
                     </TouchableOpacity>
                 );
