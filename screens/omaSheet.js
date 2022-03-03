@@ -1,6 +1,6 @@
 import React from 'react';
-import { Text, View, Dimensions } from 'react-native';
-import { B, I } from './span';
+import { Text, View, Dimensions, StyleSheet } from 'react-native';
+import { B, I } from '../components/span';
 const {width,height} = Dimensions.get("window");
 
 const styles = StyleSheet.create({
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const Screen = (props) => (
+const OmaScreen = (props) => (
 <View style = {styles.BigContainer}>
 <View style = {styles.Container}>
     <Text style={styles.header}>Klasse</Text>
@@ -31,4 +31,4 @@ const Screen = (props) => (
 
 );
 
-export default Screen;
+export default OmaScreen;
