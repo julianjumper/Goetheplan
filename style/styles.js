@@ -154,6 +154,7 @@ const stylesSettings = StyleSheet.create({
     },
     button: {
         width: width / 4,
+        height: height / 23,
     },
     aboutPage: {
         position: 'absolute',

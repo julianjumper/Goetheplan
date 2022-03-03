@@ -35,7 +35,7 @@ export default function App() {
         <stack.Screen name='Home' component={stackNav} options={{
           headerShown: false,
         }} />
-        <stack.Screen name='Settings' component={Settings} />
+        <stack.Screen name='Settings' component={Settings} options={{headerLeft: () => null, title: () => null}} />
         <stack.Screen name='Landing' component={landingScreen} options={{
           headerShown: false,
           gestureEnabled: false,

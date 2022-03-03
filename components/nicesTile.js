@@ -10,21 +10,10 @@ import {
 import { stylesTile } from "../style/stylesTile";
 import { B, I } from "./span";
 import OmaScreen from "../screens/omaSheet";
+import { normalizeFontSize } from "./normalizeFont";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
-
-// based on iphone 5s's scale
-const scale = SCREEN_WIDTH / 320;
-
-function normalize(size) {
-  const newSize = size * scale;
-  if (Platform.OS === "ios") {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize));
-  } else {
-    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
-  }
-}
 
 const calcTileDimensions = (deviceWidth, deviceHeight, tpr) => {
   const padding = 10;
@@ -68,10 +57,6 @@ function getColor(kind) {
     default:
       return (color = "orange");
   }
-}
-
-function normalizeFontSize(size) {
-  return size * scale;
 }
 
 function generateCenteredContent(
@@ -301,7 +286,19 @@ const Tile_ = (props) => {
 
   return (
     <TouchableOpacity
-      onPress={() => navigation.push("OmaScreen", { class: props.class })}
+      onPress={() =>
+        navigation.push("OmaScreen", {
+          klasse: klasse,
+          color: color,
+          type: type,
+          lessons: lessons,
+          comment: comment,
+          newRoom: newRoom,
+          subject: subject,
+          absentTeacher: absentTeacher,
+          replacementTeacher: replacementTeacher,
+        })
+      }
     >
       {Item({
         ...tileDimensions,
