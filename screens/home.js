@@ -9,6 +9,7 @@ import {
   Dimensions,
   Alert,
   RefreshControl,
+  Platform,
 } from "react-native";
 import { styles } from "../style/styles";
 import Tile from "../components/tile";
@@ -207,7 +208,7 @@ export default function Home({ route, navigation }) {
       <StatusBar style="auto" />
 
       <SafeAreaView style={{ paddingTop: Platform.OS === "android" ? 30 : 0 }}>
-        <View style={styles.icons}>
+        <View style={[styles.icons, { top: Platform.OS === "android" ? height / 11.5 : height / 13, }]}>
           <Icon
             name="settings"
             onPress={() => navigation.navigate("Settings")}

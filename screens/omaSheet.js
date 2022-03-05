@@ -63,16 +63,13 @@ const OmaScreen = ({ navigation, route }) => {
             <B>Vertretungslehrer:</B> {replacementTeacher}
           </Text>
           <Text style={styles.header}>
-            {" "}
             <B>neuer Raum:</B> {newRoom}
           </Text>
           <Text style={styles.header}>
-            {" "}
             <B>Art:</B> {type}
           </Text>
           <Text style={styles.header}>
-            {" "}
-            <B>Bemerkung:</B> {comment}
+            <B>Bemerkung:</B> {comment.length > 0 ? comment : "\nkeine Bemerkung"}
           </Text>
         </View>
       </View>
