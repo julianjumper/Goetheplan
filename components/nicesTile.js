@@ -53,7 +53,7 @@ function getColor(kind) {
     case "Verlegung":
       return (color = "#3C8CED");
     case "Raumänd.":
-      return (color = "#FDA435");
+      return (color = "#2596be");
     default:
       return (color = "orange");
   }

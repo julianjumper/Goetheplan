@@ -165,15 +165,7 @@ export default function Home({ route, navigation }) {
     for (let i = 0; i < _data.length; i++) {
       if (_data[i]["classes"].includes(classes) || classes === "---")
         tiles_array.push(
-          <TouchableOpacity
-            key={i + 1}
-            onPress={() => {
-              // navigation.navigate("Information", { informations: _data[i], number: i });
-              if (_data[i]["comments"] !== "") {
-                Alert.alert("Bemerkung", _data[i]["comments"]);
-              }
-            }}
-          >
+
             <Tile_
               key={i + 1}
               text={_data[i]["absent"]} // Abwesender Lehrer
@@ -186,7 +178,6 @@ export default function Home({ route, navigation }) {
               replacement={_data[i]["replacement"]} // Vertretung
               navigation={navigation}
             />
-          </TouchableOpacity>
         );
     }
     if (
